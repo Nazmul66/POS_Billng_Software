@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -17,17 +16,6 @@ Route::get('/', function () {
 });
 
 
-Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
-
-    //__ Admin __//
-    Route::controller(AdminController::class)->group(function () {
-        Route::get('/dashboard', "index")->name('dashboard');
-    });
-
-});
-
-
-
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -40,3 +28,4 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
 // });
 
 require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';

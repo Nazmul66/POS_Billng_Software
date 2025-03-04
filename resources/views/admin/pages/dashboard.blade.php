@@ -1,15 +1,20 @@
 @extends('admin.layout.master')
 
-@push('name')
-    
+@push('meta-title')
+    Dashboard Layout
 @endpush
 
-@push('name')
-    
+@push('add-css')
+    fgdfg
 @endpush
+
+{{-- Active Menu Sidebar --}}
+@section("dashboard", 'mm-active')
+
 
 @section('body-content')
     
+
 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
     <div class="col">
         <div class="card radius-10 bg-gradient-deepblue">
@@ -88,6 +93,7 @@
      </div>
     </div>
 </div><!--end row-->
+
 
 <div class="row">
     <div class="col-12 col-lg-8 col-xl-8 d-flex">
@@ -718,7 +724,6 @@
 @endsection
 
 
-
-@push('script')
+@push('add-js')
     
 @endpush
