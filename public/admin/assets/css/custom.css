@@ -298,6 +298,77 @@ table.dataTable th.dt-type-numeric{
 
     div.dt-container div.dt-layout-row:not(.dt-layout-table) {
         display: flex !important;
+        flex-wrap: wrap;
+    }
+    div.dt-container select.dt-input {
+        font-size: 13px;
+    }
+    label:not(.form-check-label):not(.custom-file-label) {
+        font-size: 13px;
+        /* display: none; */
+    }
+    div.dt-container .dt-search input {
+        margin-left: 8px !important;
+        padding: 8px !important;
+    }
+    div.dt-container select.dt-input {
+        padding: 8px !important;
+    }
+    table.dataTable thead > tr > th{
+        white-space: nowrap;
+    }
+    table.dataTable > tbody > tr {
+        white-space: nowrap;
+    }
+    div.dt-container div.dt-layout-row div.dt-layout-cell {
+        overflow-x: scroll;
+    }
+    div.dt-container div.dt-layout-row:not(.dt-layout-table) div.dt-layout-cell > * {
+        font-size: 12px;
+    }
+    div.dt-container .dt-paging .dt-paging-button.disabled {
+        font-size: 12px;
+    }
+    body div.dt-container .dt-paging .dt-paging-button.current, body div.dt-container .dt-paging .dt-paging-button.current:hover {
+        font-size: 12px;
+    }
+    .dt-length label,
+    .dt-search label{
+        display: none !important;
+    }
+    .breadcrumb {
+        padding: .40rem 1rem !important;
+        margin-bottom: 0;
+    }
+}
+
+
+@media ( min-width: 577px ) and ( max-width: 768px ){
+    .message_content {
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .message_content label{
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    .view_modal_content label{
+        width: 20%;
+        font-size: 14px;
+    }
+    .view_modal_content span,
+    .view_modal_content a{
+        font-size: 14px;
+        width: 80%;
+    }
+    .message_content span,
+    .message_content a{
+        width: 100%;
+    }
+
+
+    div.dt-container div.dt-layout-row:not(.dt-layout-table) {
+        display: flex !important;
     }
     div.dt-container select.dt-input {
         font-size: 13px;
