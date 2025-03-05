@@ -39,12 +39,12 @@ class CategoryController extends Controller
             })
             ->addColumn('status', function ($category) {
                 if ($category->status == 1) {
-                    return ' <a class="status" id="status" href="javascript:void(0)"
+                    return ' <a class="status text-success" id="status" href="javascript:void(0)"
                         data-id="'.$category->id.'" data-status="'.$category->status.'"> <i
                             class="fa-solid fa-toggle-on fa-2x"></i>
                     </a>';
                 } else {
-                    return '<a class="status" id="status" href="javascript:void(0)"
+                    return '<a class="status text-success" id="status" href="javascript:void(0)"
                         data-id="'.$category->id.'" data-status="'.$category->status.'"> <i
                             class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
                     </a>';
@@ -52,23 +52,12 @@ class CategoryController extends Controller
             })
             ->addColumn('action', function ($category) {
                 $actionHtml = Blade::render('
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions <i class="mdi mdi-chevron-down"></i>
-                        </button>
-
-                        <div class="dropdown-menu dropdownmenu-primary" style="">
-                            <a class="dropdown-item text-info" id="viewButton" href="javascript:void(0)" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#viewModal">
-                                <i class="fas fa-eye"></i> View
-                            </a>
-                          
-                            <a class="dropdown-item text-success" id="editButton" href="javascript:void(0)" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#editModal">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
+                    <div class="d-flex order-actions">
+                        <a href="javascript:;" id="viewButton" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#viewModal"><ion-icon name="eye-outline"></ion-icon></a>
                         
-                            <a class="dropdown-item text-danger" href="javascript:void(0)" data-id="'.$category->id.'" id="deleteBtn">
-                                <i class="fas fa-trash"></i> Delete
-                            </a>
-                        </div>
+                        <a href="javascript:;" id="editButton" class="ms-2" data-id="'.$category->id.'" data-bs-toggle="modal" data-bs-target="#editModal"><i class="bx bx-edit"></i></a>
+
+                        <a href="javascript:;" class="ms-2" data-id="'.$category->id.'" id="deleteBtn"><i class="bx bx-trash"></i></a>
                     </div>
                 ', ['category' => $category]);
                 return $actionHtml;

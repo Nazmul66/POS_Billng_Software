@@ -32,6 +32,15 @@
                 <div class="menu-title">Category</div>
             </a>
         </li>
+
+        <li class="@yield('subCategory')">
+            <a href="{{ route('admin.subcategory.index') }}">
+                <div class="parent-icon">
+                    <i class='bx bx-category'></i>
+                </div>
+                <div class="menu-title">SubCategory</div>
+            </a>
+        </li>
     </ul>
     <!--end navigation-->
 </div>
