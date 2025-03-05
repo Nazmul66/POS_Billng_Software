@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\Admin\UnitController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -41,5 +42,12 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::get('/brand-data', [BrandsController::class, 'getData'])->name('brand-data');
     Route::post('/change-brand-status', [BrandsController::class, 'changeBrandStatus'])->name('brand.status');
     Route::get('/brands/view/{id}', [BrandsController::class, 'brandView'])->name('brand.view');
+
+
+    //______ Units _____//
+    Route::resource('/units', UnitController::class)->names('unit');
+    Route::get('/unit-data', [UnitController::class, 'getData'])->name('unit-data');
+    Route::post('/unit/status', [UnitController::class, 'changeUnitStatus'])->name('unit.status');
+    Route::get('/units/view/{id}', [UnitController::class, 'unitView'])->name('unit.view');
 
 });

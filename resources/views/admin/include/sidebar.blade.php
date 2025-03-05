@@ -36,7 +36,7 @@
         <li class="@yield('subCategory')">
             <a href="{{ route('admin.subcategory.index') }}">
                 <div class="parent-icon">
-                    <i class='bx bx-category'></i>
+                    <i class='bx bx-layout'></i>
                 </div>
                 <div class="menu-title">SubCategory</div>
             </a>
@@ -45,9 +45,18 @@
         <li class="@yield('brand')">
             <a href="{{ route('admin.brand.index') }}">
                 <div class="parent-icon">
-                    <i class='bx bx-category'></i>
+                    <i class='bx bx-terminal'></i>
                 </div>
                 <div class="menu-title">Brand</div>
+            </a>
+        </li>
+
+        <li class="@yield('unit')">
+            <a href="{{ route('admin.unit.index') }}">
+                <div class="parent-icon">
+                    <i class='bx bx-cube-alt' ></i>
+                </div>
+                <div class="menu-title">Unit</div>
             </a>
         </li>
     </ul>
