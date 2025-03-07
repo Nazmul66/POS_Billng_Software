@@ -1,29 +1,29 @@
 @extends('admin.layout.master')
 
 @push('meta-title')
-    Supplier
+    Warehouse
 @endpush
 
 @push('add-css')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 
 {{-- Active Menu Sidebar --}}
-@section("supplier", 'mm-active')
+@section("warehouse", 'mm-active')
 
 
 @section('body-content')
 
 <!--breadcrumb-->
-   @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Manage Suppliers'])
+   @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Manage Warehouses'])
 <!--end breadcrumb-->
 
     <!-- Content part Start -->
     <div class="card">
         <div class="card-header p-3">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title m-0">Suppliers List</h4>
+                <h4 class="card-title m-0">Warehouses List</h4>
 
                 <div class="">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
@@ -39,7 +39,8 @@
                     <thead class="table-light">
                         <tr>
                             <th>#SL.</th>
-                            <th>Suppliers Name</th>
+                            <th>Warehouse</th>
+                            <th>Contact Person</th>
                             <th>Phone Number</th>
                             <th>Address</th>
                             <th>Status</th>
@@ -59,7 +60,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Create Supplier</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create Warehouse</h5>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -68,36 +69,22 @@
                         <form id="createForm" enctype="multipart/form-data">
                             @csrf
 
-                            <div class="new-employee-field">
-								<div class="profile-pic-upload">
-									<div class="profile-pic" id="profile-pic">
-										<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle plus-down-add"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Add Image</span>
-									</div>
-									<div class="mb-3">
-										<div class="image-upload mb-0">
-											<input type="file" name="image" accept=".png, .jpeg, .jpg, .webp" class="image_upload">
-											<div class="image-uploads">
-												<h4>Upload Image</h4>
-											</div>
-										</div>
-										<p class="mt-2">JPEG, PNG up to 4 MB</p>
-									</div>
-								</div>
-							</div>
-
                             <div class="row">
-								<div class="col-lg-6 mb-3">
-									<label for="first_name" class="form-label">First Name<span class="text-danger ms-1">*</span></label>
-									<input type="text" name="first_name" id="first_name" class="form-control"> 
+								<div class="col-lg-12 mb-3">
+									<label for="warehouse" class="form-label">Warehouse<span class="text-danger ms-1">*</span></label>
+									<input type="text" name="warehouse" id="warehouse" class="form-control"> 
 
-                                    <span id="first_name_validate" class="text-danger validation-error mt-1"></span>
+                                    <span id="warehouse_validate" class="text-danger validation-error mt-1"></span>
 								</div>
 
-								<div class="col-lg-6 mb-3">
-									<label for="last_name" class="form-label">Last Name<span class="text-danger ms-1">*</span></label>
-									<input type="text" name="last_name" id="last_name" class="form-control"> 
+								<div class="col-lg-12 mb-3">
+									<label for="contact_person" class="form-label">Contact Person<span class="text-danger ms-1">*</span></label>
+                                    <select class="form-select" name="contact_person" id="contact_person">
+                                        <option value="1" selected>Nazmul Hassan</option>
+                                        <option value="2">Robiul Islam</option>
+                                    </select>
 
-                                    <span id="last_name_validate" class="text-danger validation-error mt-1"></span>
+                                    <span id="contact_person_validate" class="text-danger validation-error mt-1"></span>
 								</div>
 
 								<div class="col-lg-12 mb-3">
@@ -195,7 +182,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Update Supplier</h5>
+                        <h5 class="modal-title" id="myModalLabel">Update Bill</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -206,36 +193,23 @@
 
                             <input type="text" name="id" id="id" hidden>
 
-                            <div class="new-employee-field">
-								<div class="profile-pic-upload">
-									<div class="profile-pic" id="up-profile-pic">
-										<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle plus-down-add"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Add Image</span>
-									</div>
-									<div class="mb-3">
-										<div class="image-upload mb-0">
-											<input type="file" name="image" accept=".png, .jpeg, .jpg, .webp" class="up_image_upload">
-											<div class="image-uploads">
-												<h4>Upload Image</h4>
-											</div>
-										</div>
-										<p class="mt-2">JPEG, PNG up to 4 MB</p>
-									</div>
-								</div>
-							</div>
-
                             <div class="row">
-								<div class="col-lg-6 mb-3">
-									<label for="up_first_name" class="form-label">First Name<span class="text-danger ms-1">*</span></label>
-									<input type="text" name="first_name" id="up_first_name" class="form-control"> 
+                                <div class="col-lg-12 mb-3">
+									<label for="up_warehouse" class="form-label">Warehouse<span class="text-danger ms-1">*</span></label>
+									<input type="text" name="warehouse" id="up_warehouse" class="form-control"> 
 
-                                    <span id="up_first_name_validate" class="text-danger validation-error mt-1"></span>
+                                    <span id="up_warehouse_validate" class="text-danger validation-error mt-1"></span>
 								</div>
 
-								<div class="col-lg-6 mb-3">
-									<label for="up_last_name" class="form-label">Last Name<span class="text-danger ms-1">*</span></label>
-									<input type="text" name="last_name" id="up_last_name" class="form-control"> 
+								<div class="col-lg-12 mb-3">
+									<label for="up_contact_person" class="form-label">Contact Person<span class="text-danger ms-1">*</span></label>
 
-                                    <span id="up_last_name_validate" class="text-danger validation-error mt-1"></span>
+                                    <select class="form-select" name="contact_person" id="up_contact_person">
+                                        <option value="1">Nazmul Hassan</option>
+                                        <option value="2">Robiul Islam</option>
+                                    </select>
+
+                                    <span id="up_contact_person_validate" class="text-danger validation-error mt-1"></span>
 								</div>
 
 								<div class="col-lg-12 mb-3">
@@ -330,34 +304,34 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">View Supplier List</h5>
+                        <h5 class="modal-title" id="myModalLabel">View Bill List</h5>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
                         <div class="view_modal_content">
-                            <label>Supplier Name : </label>
-                            <span class="text-dark" id="view_full_name"></span>
+                            <label>Warehouse : </label>
+                            <span class="text-dark" id="view_warehouse"></span>
                         </div>
 
                         <div class="view_modal_content">
-                            <label>Image : </label>
-                            <div id="viewImageShow"></div>
+                            <label>Contact Person : </label>
+                            <span class="text-dark" id="view_contact_person"></span>
                         </div>
 
                         <div class="view_modal_content">
-                            <label>Supplier Email : </label>
+                            <label>Warehouse Email : </label>
                             <span class="text-dark" id="view_email"></span>
                         </div>
 
                         <div class="view_modal_content">
-                            <label>Supplier Phone : </label>
+                            <label>Warehouse Phone : </label>
                             <span class="text-dark" id="view_phone"></span>
                         </div>
 
                         <div class="view_modal_content">
-                            <label>Supplier Address : </label>
+                            <label>Warehouse Address : </label>
                             <span class="text-dark" id="view_address"></span>
                         </div>
 
@@ -405,37 +379,8 @@
 @endsection
 
 @push('add-js')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('.image_upload').on('change', function (event) {
-                let input = event.target;
-                let reader = new FileReader();
-
-                if (input.files && input.files[0]) {
-                    reader.onload = function (e) {
-                        $('#profile-pic').html(`<img src="${e.target.result}" width="120" height="120">`);
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-            });
-
-
-            $('.up_image_upload').on('change', function (event) {
-                let input = event.target;
-                let reader = new FileReader();
-
-                if (input.files && input.files[0]) {
-                    reader.onload = function (e) {
-                        $('#up-profile-pic').html(`<img src="${e.target.result}" width="120" height="120">`);
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-            });
-        });
-    </script>
+<script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> 
 
     <script>
         $(document).ready(function () {
@@ -447,7 +392,7 @@
                 ],
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.supplier-data') }}",
+                ajax: "{{ route('admin.warehouse-data') }}",
                 // pageLength: 30,
                 columns: [
                     { 
@@ -457,10 +402,13 @@
                         searchable: false 
                     },
                     {
-                        data: 'supplier_name',
+                        data: 'warehouse',
                     },
                     {
-                        data: 'supplier_phone',
+                        data: 'contact_person',
+                    },
+                    {
+                        data: 'warehouse_phone',
                     },
                     {
                         data: 'address',
@@ -486,7 +434,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.supplier.status') }}",
+                    url: "{{ route('admin.warehouse.status') }}",
                     data: {
                         // '_token': token,
                         id: id,
@@ -525,7 +473,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ route('admin.supplier.store') }}",
+                    url: "{{ route('admin.warehouse.store') }}",
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -543,18 +491,13 @@
                                 text: `${res.message}`,
                                 icon: "success"
                             })
-
-                            // Correctly reset the image using JavaScript
-                            $('#profile-pic').html(`
-                                <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle plus-down-add"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Add Image</span>
-                            `);
                         }
                     },
                     error: function (err) {
                         let error = err.responseJSON.errors;
 
-                        $('#first_name_validate').empty().html(error.first_name);
-                        $('#last_name_validate').empty().html(error.last_name);
+                        $('#warehouse_validate').empty().html(error.warehouse);
+                        $('#contact_person_validate').empty().html(error.contact_person);
                         $('#email_validate').empty().html(error.email);
                         $('#phone_validate').empty().html(error.phone);
                         $('#address_validate').empty().html(error.address);
@@ -583,19 +526,15 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/suppliers') }}/" + id + "/edit",
+                    url: "{{ url('admin/warehouses') }}/" + id + "/edit",
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         let data = res.success;
 
                         $('#id').val(data.id);
-                        $('#up_first_name').val(data.first_name);
-                        $('#up_last_name').val(data.last_name);
-                        $('#up-profile-pic').html('');
-                        $('#up-profile-pic').append(`
-                            <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle plus-down-add"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Add Image</span>
-                        `);
+                        $('#up_warehouse').val(data.warehouse);
+                        $('#up_contact_person').val(data.contact_person);
                         $('#up_email').val(data.email);
                         $('#up_phone').val(data.phone);
                         $('#up_address').val(data.address);
@@ -622,14 +561,14 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ url('admin/suppliers') }}/" + id,
+                    url: "{{ url('admin/warehouses') }}/" + id,
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         swal.fire({
                             title: "Success",
-                            text: "Suppliers Updated Successfully",
+                            text: "Warehouse Updated Successfully",
                             icon: "success"
                         })
 
@@ -641,8 +580,8 @@
                     error: function (err) {
                         let error = err.responseJSON.errors;
 
-                        $('#up_first_name_validate').empty().html(error.first_name);
-                        $('#up_last_name_validate').empty().html(error.last_name);
+                        $('#up_warehouse_validate').empty().html(error.warehouse);
+                        $('#up_contact_person_validate').empty().html(error.contact_person);
                         $('#up_email_validate').empty().html(error.email);
                         $('#up_phone_validate').empty().html(error.phone);
                         $('#up_address_validate').empty().html(error.address);
@@ -680,7 +619,7 @@
                         $.ajax({
                             type: 'DELETE',
 
-                            url: "{{ url('admin/suppliers') }}/" + id,
+                            url: "{{ url('admin/warehouses') }}/" + id,
                             data: {
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -717,22 +656,16 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/suppliers/view') }}/" + id,
+                    url: "{{ url('admin/warehouses/view') }}/" + id,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         let data = res.success;
 
-                        $('#view_full_name').html(res.full_name);
-                        $('#viewImageShow').html('');
-                        let imageUrl = data.image ? `{{ asset("` + data.image + `") }}` : '{{ asset("admin/assets/images/dummy-image.jpg") }}';
-                        $('#viewImageShow').append(`
-                            <a href="${imageUrl}" target="__blank">
-                                <img src="${imageUrl}" alt="Preview Image" style="width: 75px;">
-                            </a>
-                        `);
-                        $('#view_email').html(res.supplier_email);
-                        $('#view_phone').html(res.supplier_phone);
+                        $('#view_warehouse').html(data.warehouse);
+                        $('#view_contact_person').html(data.contact_person);
+                        $('#view_email').html(res.warehouse_email);
+                        $('#view_phone').html(res.warehouse_phone);
                         $('#view_address').html(data.address);
                         $('#view_state').html(data.state);
                         $('#view_city').html(data.city);

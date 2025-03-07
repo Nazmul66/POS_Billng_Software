@@ -337,7 +337,7 @@
 
                     <div class="modal-body">
                         <div class="view_modal_content">
-                            <label>Customer Name : </label>
+                            <label>Biller Name : </label>
                             <span class="text-dark" id="view_full_name"></span>
                         </div>
 
@@ -347,17 +347,17 @@
                         </div>
 
                         <div class="view_modal_content">
-                            <label>Customer Email : </label>
+                            <label>Biller Email : </label>
                             <span class="text-dark" id="view_email"></span>
                         </div>
 
                         <div class="view_modal_content">
-                            <label>Customer Phone : </label>
+                            <label>Biller Phone : </label>
                             <span class="text-dark" id="view_phone"></span>
                         </div>
 
                         <div class="view_modal_content">
-                            <label>Customer Address : </label>
+                            <label>Biller Address : </label>
                             <span class="text-dark" id="view_address"></span>
                         </div>
 
@@ -409,22 +409,6 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> 
 
     <script>
-        $('#city').select2({
-            dropdownParent: $('#createModal'),
-        });
-
-        $('#state').select2({
-            dropdownParent: $('#createModal'),
-        });
-
-        $('#up_city').select2({
-            dropdownParent: $('#editModal'),
-        });
-        
-        $('#up_state').select2({
-            dropdownParent: $('#editModal'),
-        });
-
         $(document).ready(function () {
             $('.image_upload').on('change', function (event) {
                 let input = event.target;

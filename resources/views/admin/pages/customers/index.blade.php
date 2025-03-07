@@ -409,22 +409,6 @@
     <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
-        $('#city').select2({
-            dropdownParent: $('#createModal'),
-        });
-
-        $('#state').select2({
-            dropdownParent: $('#createModal'),
-        });
-
-        $('#up_city').select2({
-            dropdownParent: $('#editModal'),
-        });
-        
-        $('#up_state').select2({
-            dropdownParent: $('#editModal'),
-        });
-
         $(document).ready(function () {
             $('.image_upload').on('change', function (event) {
                 let input = event.target;

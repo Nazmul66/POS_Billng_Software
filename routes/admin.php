@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UnitController;
+use App\Http\Controllers\Admin\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -73,5 +74,12 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::get('/supplier-data', [SupplierController::class, 'getData'])->name('supplier-data');
     Route::post('/supplier/status', [SupplierController::class, 'changeSupplierStatus'])->name('supplier.status');
     Route::get('/suppliers/view/{id}', [SupplierController::class, 'supplierView'])->name('supplier.view');
+
+
+    //______ Warehouse _____//
+    Route::resource('/warehouses', WarehouseController::class)->names('warehouse');
+    Route::get('/warehouse-data', [WarehouseController::class, 'getData'])->name('warehouse-data');
+    Route::post('/warehouse/status', [WarehouseController::class, 'changeWarehouseStatus'])->name('warehouse.status');
+    Route::get('/warehouses/view/{id}', [WarehouseController::class, 'warehouseView'])->name('warehouse.view');
 
 });
