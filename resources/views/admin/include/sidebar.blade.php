@@ -72,6 +72,24 @@
             </a>
         </li>
 
+        <li class="@yield('bill')">
+            <a href="{{ route('admin.bill.index') }}">
+                <div class="parent-icon">
+                    <i class='bx bx-cube-alt' ></i>
+                </div>
+                <div class="menu-title">Bills</div>
+            </a>
+        </li>
+
+        {{-- <li class="@yield('customer')">
+            <a href="{{ route('admin.customer.index') }}">
+                <div class="parent-icon">
+                    <i class='bx bx-cube-alt' ></i>
+                </div>
+                <div class="menu-title">Customers</div>
+            </a>
+        </li> --}}
+
     </ul>
     <!--end navigation-->
 </div>

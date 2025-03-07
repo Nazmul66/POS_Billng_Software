@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BillerController;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
@@ -57,5 +58,12 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::get('/customer-data', [CustomerController::class, 'getData'])->name('customer-data');
     Route::post('/customer/status', [CustomerController::class, 'changeCustomerStatus'])->name('customer.status');
     Route::get('/customers/view/{id}', [CustomerController::class, 'customerView'])->name('customer.view');
+
+
+    //______ Bills _____//
+    Route::resource('/bills', BillerController::class)->names('bill');
+    Route::get('/bill-data', [BillerController::class, 'getData'])->name('bill-data');
+    Route::post('/bill/status', [BillerController::class, 'changeBillStatus'])->name('bill.status');
+    Route::get('/bills/view/{id}', [BillerController::class, 'billView'])->name('bill.view');
 
 });
