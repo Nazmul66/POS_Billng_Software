@@ -16,6 +16,10 @@
 	<link href="{{ asset('admin/assets/css/pace.min.css') }}" rel="stylesheet" />
 	<script src="{{ asset('admin/assets/js/pace.min.js') }}"></script>
 
+	<title>
+		{{ env('APP_NAME') }} - @stack('meta-title')
+	</title>
+
 	<!-- Bootstrap CSS -->
 	<link href="{{ asset('admin/assets/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('admin/assets/css/bootstrap-extended.css') }}" rel="stylesheet">
@@ -32,14 +36,13 @@
 	<!-- Font Awesome CDN File -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+	{{-- Add New CSS --}}
+	@stack('add-css')
+
 	<!-- Theme Style CSS -->
 	<link rel="stylesheet" href="{{ asset('admin/assets/css/dark-theme.css') }}" />
 	<link rel="stylesheet" href="{{ asset('admin/assets/css/semi-dark.css') }}" />
 	<link rel="stylesheet" href="{{ asset('admin/assets/css/header-colors.css') }}" />
 	<link rel="stylesheet" href="{{ asset('admin/assets/css/custom.css') }}" />
-	<title>
-		{{ env('APP_NAME') }} - @stack('meta-title')
-	</title>
 
-	{{-- Add New CSS --}}
-	@stack('add-css')
+

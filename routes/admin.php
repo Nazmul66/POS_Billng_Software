@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\SubcategoryController;
+use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,5 +66,12 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::get('/bill-data', [BillerController::class, 'getData'])->name('bill-data');
     Route::post('/bill/status', [BillerController::class, 'changeBillStatus'])->name('bill.status');
     Route::get('/bills/view/{id}', [BillerController::class, 'billView'])->name('bill.view');
+
+
+    //______ Supplier _____//
+    Route::resource('/suppliers', SupplierController::class)->names('supplier');
+    Route::get('/supplier-data', [SupplierController::class, 'getData'])->name('supplier-data');
+    Route::post('/supplier/status', [SupplierController::class, 'changeSupplierStatus'])->name('supplier.status');
+    Route::get('/suppliers/view/{id}', [SupplierController::class, 'supplierView'])->name('supplier.view');
 
 });

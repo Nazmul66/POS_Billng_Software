@@ -1,29 +1,29 @@
 @extends('admin.layout.master')
 
 @push('meta-title')
-    Bill
+    Supplier
 @endpush
 
 @push('add-css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.6/css/dataTables.dataTables.min.css">
 @endpush
 
 {{-- Active Menu Sidebar --}}
-@section("bill", 'mm-active')
+@section("supplier", 'mm-active')
 
 
 @section('body-content')
 
 <!--breadcrumb-->
-   @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Manage Bills'])
+   @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Manage Suppliers'])
 <!--end breadcrumb-->
 
     <!-- Content part Start -->
     <div class="card">
         <div class="card-header p-3">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title m-0">Bills List</h4>
+                <h4 class="card-title m-0">Suppliers List</h4>
 
                 <div class="">
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
@@ -39,7 +39,7 @@
                     <thead class="table-light">
                         <tr>
                             <th>#SL.</th>
-                            <th>Billers Name</th>
+                            <th>Suppliers Name</th>
                             <th>Phone Number</th>
                             <th>Address</th>
                             <th>Status</th>
@@ -59,7 +59,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Create Bill</h5>
+                        <h5 class="modal-title" id="myModalLabel">Create Supplier</h5>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -195,7 +195,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Update Bill</h5>
+                        <h5 class="modal-title" id="myModalLabel">Update Supplier</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -330,7 +330,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">View Bill List</h5>
+                        <h5 class="modal-title" id="myModalLabel">View Supplier List</h5>
 
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -405,8 +405,8 @@
 @endsection
 
 @push('add-js')
-<script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.6/js/dataTables.min.js"></script>
 
     <script>
         $('#city').select2({
@@ -463,7 +463,7 @@
                 ],
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('admin.bill-data') }}",
+                ajax: "{{ route('admin.supplier-data') }}",
                 // pageLength: 30,
                 columns: [
                     { 
@@ -473,10 +473,10 @@
                         searchable: false 
                     },
                     {
-                        data: 'biller_name',
+                        data: 'supplier_name',
                     },
                     {
-                        data: 'biller_phone',
+                        data: 'supplier_phone',
                     },
                     {
                         data: 'address',
@@ -502,7 +502,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('admin.bill.status') }}",
+                    url: "{{ route('admin.supplier.status') }}",
                     data: {
                         // '_token': token,
                         id: id,
@@ -541,7 +541,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ route('admin.bill.store') }}",
+                    url: "{{ route('admin.supplier.store') }}",
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
@@ -599,7 +599,7 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/bills') }}/" + id + "/edit",
+                    url: "{{ url('admin/suppliers') }}/" + id + "/edit",
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
@@ -638,14 +638,14 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{ url('admin/bills') }}/" + id,
+                    url: "{{ url('admin/suppliers') }}/" + id,
                     data: formData,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
                         swal.fire({
                             title: "Success",
-                            text: "Bills Updated Successfully",
+                            text: "Suppliers Updated Successfully",
                             icon: "success"
                         })
 
@@ -696,7 +696,7 @@
                         $.ajax({
                             type: 'DELETE',
 
-                            url: "{{ url('admin/bills') }}/" + id,
+                            url: "{{ url('admin/suppliers') }}/" + id,
                             data: {
                                 headers: {
                                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -733,7 +733,7 @@
                     // headers: {
                     //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     // },
-                    url: "{{ url('admin/bills/view') }}/" + id,
+                    url: "{{ url('admin/suppliers/view') }}/" + id,
                     processData: false,  // Prevent jQuery from processing the data
                     contentType: false,  // Prevent jQuery from setting contentType
                     success: function (res) {
@@ -747,8 +747,8 @@
                                 <img src="${imageUrl}" alt="Preview Image" style="width: 75px;">
                             </a>
                         `);
-                        $('#view_email').html(res.biller_email);
-                        $('#view_phone').html(res.biller_phone);
+                        $('#view_email').html(res.supplier_email);
+                        $('#view_phone').html(res.supplier_phone);
                         $('#view_address').html(data.address);
                         $('#view_state').html(data.state);
                         $('#view_city').html(data.city);
