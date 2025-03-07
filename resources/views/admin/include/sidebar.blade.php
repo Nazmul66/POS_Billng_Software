@@ -59,6 +59,19 @@
                 <div class="menu-title">Unit</div>
             </a>
         </li>
+
+
+        {{-- People --}}
+        <li class="menu-label">People</li>
+        <li class="@yield('customer')">
+            <a href="{{ route('admin.customer.index') }}">
+                <div class="parent-icon">
+                    <i class='bx bx-cube-alt' ></i>
+                </div>
+                <div class="menu-title">Customers</div>
+            </a>
+        </li>
+
     </ul>
     <!--end navigation-->
 </div>

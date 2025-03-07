@@ -568,4 +568,98 @@ select > option:disabled{
 
 
 
+.profile-pic-upload {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    margin-bottom: 24px;
+}
+.profile-pic-upload .profile-pic {
+    width: 120px;
+    height: 120px;
+    border: 1px dashed #E6EAED;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    border-radius: 10px;
+    margin-right: 24px;
+    position: relative;
+    flex-shrink: 0;
+}
+.profile-pic-upload .profile-pic span {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    flex-direction: column;
+}
+.profile-pic-upload .profile-pic span svg {
+    margin-right: 0;
+}
+svg.feather {
+    width: 16px;
+    height: 16px;
+}
+.plus-down-add {
+    margin-right: 5px;
+    width: 14px;
+    height: 14px;
+    position: relative;
+    top: -2px;
+    color: #A6AAAF;
+}
+.new-employee-field .image-upload {
+    width: 120px;
+    height: 38px;
+    border: 0;
+    background-color: #FE9F43;
+}
+.image-upload {
+    border: 1px solid rgba(145, 158, 171, 0.32);
+    position: relative;
+    margin-bottom: 35px;
+    border-radius: 5px;
+}
+.image-upload input[type=file] {
+    width: 100%;
+    opacity: 0;
+    height: 100%;
+    position: relative;
+    z-index: 9;
+    cursor: pointer;
+    color: #A6AAAF;
+}
+.new-employee-field .image-upload .image-uploads {
+    top: 12px;
+    padding: 0;
+}
+.image-upload .image-uploads {
+    text-align: center;
+    width: 100%;
+    padding: 20px 0;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+}
+.new-employee-field .image-upload .image-uploads h4 {
+    font-size: 13px;
+    color: #ffffff;
+    line-height: normal;
+}
+
+
 

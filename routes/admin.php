@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\UnitController;
 use Illuminate\Support\Facades\Route;
@@ -49,5 +50,12 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::get('/unit-data', [UnitController::class, 'getData'])->name('unit-data');
     Route::post('/unit/status', [UnitController::class, 'changeUnitStatus'])->name('unit.status');
     Route::get('/units/view/{id}', [UnitController::class, 'unitView'])->name('unit.view');
+
+
+    //______ Customers _____//
+    Route::resource('/customers', CustomerController::class)->names('customer');
+    Route::get('/customer-data', [CustomerController::class, 'getData'])->name('customer-data');
+    Route::post('/customer/status', [CustomerController::class, 'changeCustomerStatus'])->name('customer.status');
+    Route::get('/customers/view/{id}', [CustomerController::class, 'customerView'])->name('customer.view');
 
 });
