@@ -662,4 +662,11 @@ svg.feather {
 }
 
 
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    height: 250px !important;
+}
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-blurred) {
+    height: 250px !important;
+}
+
 

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BillerController;
 use App\Http\Controllers\Admin\BrandsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UnitController;
@@ -81,5 +82,13 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::get('/warehouse-data', [WarehouseController::class, 'getData'])->name('warehouse-data');
     Route::post('/warehouse/status', [WarehouseController::class, 'changeWarehouseStatus'])->name('warehouse.status');
     Route::get('/warehouses/view/{id}', [WarehouseController::class, 'warehouseView'])->name('warehouse.view');
+
+
+    //______ Product _____//
+    Route::resource('/product', ProductController::class)->names('product');
+    Route::get('/product-data', [ProductController::class, 'getData'])->name('product-data');
+    Route::post('/change-product-status', [ProductController::class, 'changeProductStatus'])->name('product.status');
+
+    Route::post('/get/product/subCategory-data', [ProductController::class, 'get_product_subCategory_data'])->name('get.product.subCategory.data');
 
 });
