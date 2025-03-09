@@ -10,7 +10,7 @@
 @endpush
 
 {{-- Active Menu Sidebar --}}
-@section("customer", 'mm-active')
+@section("product", 'mm-active')
 
 
 @section('body-content')

@@ -72,6 +72,15 @@
             </a>
         </li>
 
+        <li class="@yield('low-product')">
+            <a href="{{ route('admin.low.stock.product') }}">
+                <div class="parent-icon">
+                    <i class='bx bx-cart' ></i>
+                </div>
+                <div class="menu-title">Low Stock Products</div>
+            </a>
+        </li>
+
         {{-- People --}}
         <li class="menu-label">People</li>
         <li class="@yield('customer')">

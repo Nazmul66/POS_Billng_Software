@@ -87,7 +87,9 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     //______ Product _____//
     Route::resource('/product', ProductController::class)->names('product');
     Route::get('/product-data', [ProductController::class, 'getData'])->name('product-data');
+    Route::get('/low-product-data', [ProductController::class, 'lowStockGetData'])->name('low-product-data');
     Route::post('/change-product-status', [ProductController::class, 'changeProductStatus'])->name('product.status');
+    Route::get('/low-stock-product', [ProductController::class, 'low_stock_product'])->name('low.stock.product');
 
     Route::post('/get/product/subCategory-data', [ProductController::class, 'get_product_subCategory_data'])->name('get.product.subCategory.data');
 

@@ -132,6 +132,90 @@ class ProductController extends Controller
             ->make(true);
     }
 
+    public function lowStockGetData(Request $request)
+    {
+        // get all data
+        $products = "";
+           $query = Product::leftJoin('categories', 'categories.id', 'products.category_id')
+                    ->leftJoin('subcategories', 'subcategories.id', 'products.subCategory_id')
+                    ->leftJoin('brands', 'brands.id', 'products.brand_id');
+                   
+                    if( !empty($request->category_id) ){
+                        $query->where('products.category_id', $request->category_id);
+                    }
+
+                    if( !empty($request->subCategory_id) ){
+                        $query->where('products.subCategory_id', $request->subCategory_id);
+                    }
+
+                    if( !empty($request->product_qty) ){
+                        $qtyRange = explode('-', $request->product_qty);
+                        if (count($qtyRange) === 2) {
+                            $query->whereBetween('qty', [$qtyRange[0], $qtyRange[1]]);
+                        }
+                    }
+
+                    if( !empty($request->product_price) ){
+                        $priceRange = explode('-', $request->product_price);
+                        if (count($priceRange) === 2) {
+                            $query->whereBetween('offer_price', [$priceRange[0], $priceRange[1]]);
+                        }
+                    }
+
+            $products = $query->select('products.*', 'categories.name as cat_name', 'subcategories.subcategory_name as subCat_name', 'brands.brand_name')
+                    ->where('products.qty', "<=", 5)
+                    ->get();
+
+        return DataTables::of($products)
+            ->addIndexColumn()
+            ->addColumn('product_img', function ($product) {
+                return ' <a href="'.asset( $product->thumb_image ).'" target="__blank">
+                      <img src="'.asset( $product->thumb_image ).'" width="100px" height="100px">
+                </a>';
+            })
+            ->addColumn('categorized', function ($product) {
+                $subCat = $product->subCat_name ?? 'N/A';
+                return '<div class="">
+                       <h6>Category Name: <span class="badge bg-success">'. $product->cat_name .'</span></h6> 
+                       <h6>SubCategory Name : <span class="badge bg-success">'. $subCat .'</span></h6>
+                </div>';
+            })
+            ->addColumn('product_details', function ($product) {
+                return '<div class="">
+                       <h6><span class="text-dark">'. $product->name .'</span></h6> 
+                </div>';
+            })
+            ->addColumn('quantity', function ($product) {
+                return '<div class="">
+                       <h6><span class="text-dark">'. $product->qty .' '. $product->units .'</span></h6>
+                </div>';
+            })
+            ->addColumn('status', function ($product) {
+                if ($product->status == 1) {
+                    return ' <a class="status text-success" id="status" href="javascript:void(0)"
+                        data-id="'.$product->id.'" data-status="'.$product->status.'"> <i
+                            class="fa-solid fa-toggle-on fa-2x"></i>
+                    </a>';
+                } else {
+                    return '<a class="status text-success" id="status" href="javascript:void(0)"
+                        data-id="'.$product->id.'" data-status="'.$product->status.'"> <i
+                            class="fa-solid fa-toggle-off fa-2x" style="color: grey"></i>
+                    </a>';
+                }
+            })
+            ->addColumn('action', function ($product) {
+                $actionHtml = Blade::render('
+                    <div class="d-flex order-actions">
+                        <a  href="'. route('admin.product.show', $product->id) .'" ><ion-icon name="eye-outline"></ion-icon></a>
+                    </div>
+                ', ['product' => $product]);
+                return $actionHtml;
+            })
+
+            ->rawColumns(['categorized', 'quantity', 'product_details', 'product_img', 'status', 'action'])
+            ->make(true);
+    }
+
     public function changeProductStatus(Request $request)
     {
         $id = $request->id;
@@ -297,5 +381,14 @@ class ProductController extends Controller
                 ->first();
 
        return view('admin.pages.products.view', compact('product'));
+    }
+
+    public function low_stock_product()
+    {
+        $categories        = Category::where('status', 1)->get();
+        $subCategories     = Subcategory::where('status', 1)->get();
+        $brands            = Brand::where('status', 1)->get();
+
+        return view('admin.pages.products.low_stock_product', compact('categories', 'subCategories', 'brands'));
     }
 }

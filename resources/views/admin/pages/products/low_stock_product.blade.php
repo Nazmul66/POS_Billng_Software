@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 
 @push('meta-title')
-    All Products
+    Low Stock Products
 @endpush
 
 @push('add-css')
@@ -10,13 +10,13 @@
 @endpush
 
 {{-- Active Menu Sidebar --}}
-@section("product", 'mm-active')
+@section("low-product", 'mm-active')
 
 
 @section('body-content')
 
     <!--breadcrumb-->
-        @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Manage Products'])
+        @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Low Stock Products'])
     <!--end breadcrumb-->
 
 
@@ -24,60 +24,13 @@
     <div class="card">
         <div class="card-header p-3">
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="card-title m-0">Products List</h4>
+                <h4 class="card-title m-0">Low Stock Products List</h4>
 
                 <div class="">
-                    <a href="{{ route('admin.product.create') }}" class="btn btn-primary" >
-                        <i class="bx bxs-plus-square"></i> Add New
+                    <a href="{{ route('admin.product.index') }}" class="btn btn-primary" >
+                        <i class="bx bxs-plus-square"></i> Back
                     </a>
                 </div>
-            </div>
-        </div>
-        
-        <div class="row px-3 pt-3">
-            <div class="col-lg-3">
-                <label for="">Categories</label>
-                <select class="form-select submitable" name="category_id" id="category_id">
-                        <option value="" selected>All</option>
-                    @foreach ($categories as $item)
-                        <option value="{{ $item->id }}" data-image-url="{{ asset($item->img) }}">{{ $item->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="col-lg-3">
-                <label for="">Sub-Categories</label>
-                <select class="form-select submitable" name="subCategory_id" id="subCategory_id">
-                        <option value="" selected>All</option>
-                    @foreach ($subCategories as $item)
-                        <option value="{{ $item->id }}" data-image-url="{{ asset($item->subcategory_img) }}">{{ $item->subcategory_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="col-lg-3">
-                <label for="">Product Quantity</label>
-                <select class="form-select submitable" name="product_qty" id="product_qty">
-                    <option value="" selected>All</option>
-                    <option value="0-10">Quantity: 0 - 10</option>
-                    <option value="11-25">Quantity: 11 - 25</option>
-                    <option value="26-50">Quantity: 26 - 50</option>
-                    <option value="51-100">Quantity: 51 - 100</option>
-                    <option value="101-250">Quantity: 101 - 250</option>
-                </select>
-            </div>
-
-            <div class="col-lg-3">
-                <label for="">Product Price</label>
-                <select class="form-select submitable" name="product_price" id="product_price">
-                    <option value="" selected>All</option>
-                    <option value="0-250">Price: $0 - $250</option>
-                    <option value="251-500">Price: $251 - $500</option>
-                    <option value="501-1000">Price: $501 - $1,000</option>
-                    <option value="1001-2000">Price: $1,001 - $2,000</option>
-                    <option value="2001-5000">Price: $2,001 - $5,000</option>
-                    <option value="5001-10000">Price: $5,001 - $10,000</option>
-                </select>
             </div>
         </div>
 
@@ -123,13 +76,7 @@
                 "processing": true,
                 "serverSide": true,
                 "ajax": {
-                    "url" : "{{ route('admin.product-data') }}",
-                    "data": function(e){
-                        e.category_id     = $('#category_id').val();
-                        e.subCategory_id  = $('#subCategory_id').val();
-                        e.product_qty     = $('#product_qty').val();
-                        e.product_price   = $('#product_price').val();
-                    }
+                    "url" : "{{ route('admin.low-product-data') }}",
                 },
                 // pageLength: 30,
                 columns: [
@@ -165,7 +112,6 @@
                     },
                 ]
             });
-
 
             // status updates
             $(document).on('click', '#status', function () {
@@ -205,8 +151,6 @@
 
                 })
             })
-
-            
 
             // Delete
             $(document).on("click", "#deleteBtn", function () {
@@ -253,11 +197,6 @@
             })
         })
 
-
-        // Filterable data
-        $('.submitable').on('change', function(e){
-            $('#datatables').DataTable().ajax.reload();
-        })
 
     </script>
 @endpush
