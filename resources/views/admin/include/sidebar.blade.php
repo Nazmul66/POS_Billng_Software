@@ -61,6 +61,22 @@
         </li>
 
 
+        {{-- Invoices --}}
+        <li class="menu-label">Invoices</li>
+        <li class="@yield('invoice')">
+            <a href="javascript:;" class="has-arrow" aria-expanded="false">
+                <div class="parent-icon"><i class="bx bx-cart"></i>
+                </div>
+                <div class="menu-title">Vehicle Report</div>
+            </a>
+            <ul class="mm-collapse @yield('invoice_show')">
+                <li class="@yield('vehicle_report')"> <a href="{{ route('admin.vehicle-report-invoice') }}"><i class="bx bx-right-arrow-alt"></i>Generate Invoice</a>
+                </li>
+                <li class="@yield('vehicle_invoice')"> <a href="{{ route('admin.vehicle-report-invoice-history') }}"><i class="bx bx-right-arrow-alt"></i> Invoice History</a>
+                </li>
+            </ul>
+        </li>
+
         {{-- ECommerce --}}
         <li class="menu-label">ECommerce</li>
         <li class="@yield('product')">

@@ -1,5 +1,9 @@
 @extends('admin.layout.master')
 
+@push('canonical')
+    <link rel="canonical" href="{{ url()->current() }}">
+@endpush
+
 @push('meta-title')
     Supplier
 @endpush

@@ -669,4 +669,34 @@ svg.feather {
     height: 250px !important;
 }
 
+.invoice-line {
+    border-top: 1px solid #EAEAEA;
+    padding-top: 25px;
+    margin-top: 25px;
+    margin-left: -20px;
+    width: calc(100% + 40px);
+}
+.form__input-title label{
+    margin-bottom: 5px;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    color: #495057;
+    font-weight: 500;
+}
+.company_details{
+    margin-bottom: 5px;
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    color: #495057;
+    font-weight: 500;
+}
+label{
+    font-size: 16px;
+    text-align: left;
+    display: block;
+    color: #495057;
+    font-weight: 500;
+}
 

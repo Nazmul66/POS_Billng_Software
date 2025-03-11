@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\WarehouseController;
+use App\Http\Controllers\VehicleReportController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -92,5 +93,15 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::get('/low-stock-product', [ProductController::class, 'low_stock_product'])->name('low.stock.product');
 
     Route::post('/get/product/subCategory-data', [ProductController::class, 'get_product_subCategory_data'])->name('get.product.subCategory.data');
+
+
+    //______ Vehicle Reports _____//
+    Route::get('/vehicle-report-invoice', [VehicleReportController::class, 'index'])->name('vehicle-report-invoice');
+    Route::post('/vehicle-report-invoice-post', [VehicleReportController::class, 'store'])->name('vehicle-report-invoice-post');
+    Route::get('/vehicle-report-invoice-history', [VehicleReportController::class, 'history'])->name('vehicle-report-invoice-history');
+    Route::get('/vehicle-report-invoice-edit/{id}', [VehicleReportController::class, 'edit'])->name('vehicle-report-invoice-edit');
+    Route::put('/vehicle-report-invoice-update/{id}', [VehicleReportController::class, 'update'])->name('vehicle-report-invoice-update');
+    Route::get('/vehicle-report-invoice-view/{id}', [VehicleReportController::class, 'view'])->name('vehicle-report-invoice-view');
+    Route::get('/vehicle-report-invoice-delete/{id}', [VehicleReportController::class, 'destroy'])->name('vehicle-report-invoice-delete');
 
 });
