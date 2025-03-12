@@ -30,7 +30,7 @@
 <div class="card">
     <div class="card-body p-5">
 
-       <form action="{{ route('admin.vehicle-report-invoice-post') }}" method="POST">
+       <form action="{{ route('admin.billing-pos-invoice-post') }}" method="POST">
             @csrf
             
             <div class="row align-items-center">
@@ -253,13 +253,13 @@
                             <tbody class="table-border-bottom-0 table_extend">
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control service_name" name="service_name[]" required>
+                                        <input type="text" class="form-control service_name"  name="service_name[]" required>
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control unit_price" name="unit_price[]" required>
+                                        <input type="number" class="form-control unit_price"   name="unit_price[]" required>
                                     </td>
                                     <td>
-                                        <input type="number" class="form-control total_price" name="total_price[]" readonly>
+                                        <input type="number" class="form-control total_price"  name="total_price[]" readonly>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-info">Add</button>
@@ -305,6 +305,31 @@
                     totalPriceInput.val(''); // Clear total_price if unit_price is empty
                 }
             });
+
+            // add new input rows
+            $(document).on("click", ".btn-info", function(){
+                $('.table_extend').append(`
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control service_name" name="service_name[]" required>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control unit_price" name="unit_price[]" required>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control total_price" name="total_price[]" readonly>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">Remove</button>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            // delete all single input rows
+            $(document).on("click", ".btn-danger", function(){
+                $(this).closest("tr").remove();
+            })
 
             $("#basicInput").flatpickr({
                 enableTime: true,
@@ -383,7 +408,7 @@
                         <input type="hidden" value="${productSlug}" class="productSlug">
                         
                         <td>
-                            <input type="text" class="form-control product_name" value="${productName}" name="product_name[]" required readonly>
+                            <input type="text" class="form-control product_name" name="product_name[]" value="${productName}" required readonly>
                         </td>
                         <td>
                             <input type="number" min="1" value="1" class="form-control prdt_qty" name="prdt_qty[]" required>
@@ -445,30 +470,6 @@
                 toastr.success('Product removed successfully!');
             });
 
-            // add new input rows
-            $(document).on("click", ".btn-info", function(){
-                    $('.table_extend').append(`
-                    <tr>
-                        <td>
-                            <input type="text" class="form-control service_name" name="service_name[]" required>
-                        </td>
-                        <td>
-                            <input type="number" class="form-control unit_price" name="unit_price[]" required>
-                        </td>
-                        <td>
-                            <input type="number" class="form-control total_price" name="total_price[]" readonly>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger">Remove</button>
-                        </td>
-                    </tr>
-                `);
-            });
-
-            // delete all single input rows
-            $(document).on("click", ".btn-danger", function(){
-                $(this).closest("tr").remove();
-            })
         });
 
     });

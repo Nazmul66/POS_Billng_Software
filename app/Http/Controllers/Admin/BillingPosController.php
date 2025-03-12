@@ -36,7 +36,7 @@ class BillingPosController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'invoice_number' => 'required|string|max:255',
             'customer_name' => 'required|string|max:255',
@@ -49,9 +49,6 @@ class BillingPosController extends Controller
             'chassis_number' => 'required|string|max:255',
             'engine_number' => 'required|string|max:255',
             'color' => 'required|string|max:255',
-            'customer_experience' => 'required|string',
-            'test_drive_experience' => 'required|string',
-            'additional_part' => 'nullable|string',
             'remarks' => 'nullable|string',
             'time_in'  => 'required',
             'time_out' => 'required',
@@ -72,12 +69,34 @@ class BillingPosController extends Controller
             $billing_pos->chassis_number         = $request->chassis_number;
             $billing_pos->engine_number          = $request->engine_number;
             $billing_pos->color                  = $request->color;
-            $billing_pos->customer_experience    = $request->customer_experience;
-            $billing_pos->test_drive_experience  = $request->test_drive_experience;
-            $billing_pos->additional_part        = $request->additional_part;
             $billing_pos->remarks                = $request->remarks;
             $billing_pos->time_in                = $request->time_in;
             $billing_pos->time_out               = $request->time_out;
+            
+            $products = [];
+            for ($i = 0; $i < count($request->product_name); $i++) {
+                $products[] = [
+                    'product_id' => $request->product_id[$i],
+                    'product_name' => $request->product_name[$i],
+                    'prdt_qty' => $request->prdt_qty[$i],
+                    'prdt_price' => $request->prdt_price[$i],
+                    'totals' => $request->totals[$i],
+                ];
+            }
+
+            $services = [];
+            for ($i = 0; $i < count($request->service_name); $i++) {
+                $services[] = [
+                    'service_name' => $request->service_name[$i],
+                    'unit_price' => $request->unit_price[$i],
+                    'total_price' => $request->total_price[$i],
+                ];
+            }
+
+            // dd($services);
+            $billing_pos->products               = json_encode($products);
+            $billing_pos->services               = json_encode($services);
+
             // dd($billing_pos);
             $billing_pos->save();
         }
@@ -91,7 +110,7 @@ class BillingPosController extends Controller
 
         DB::commit();
         Toastr::success('Billing POS created', 'Success', ["positionClass" => "toast-top-right"]);
-        return redirect()->route('admin.billing-pos-invoice-history');
+        return redirect()->back();
     }
 
     /**
