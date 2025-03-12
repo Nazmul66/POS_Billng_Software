@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\VehicleReport;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VehicleReportController extends Controller
 {
@@ -31,6 +33,7 @@ class VehicleReportController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'invoice_number' => 'required|string|max:255',
             'customer_name' => 'required|string|max:255',
@@ -47,8 +50,8 @@ class VehicleReportController extends Controller
             'test_drive_experience' => 'required|string',
             'additional_part' => 'nullable|string',
             'remarks' => 'nullable|string',
-            'time_in' => 'required|date',
-            'time_out' => 'required|date',
+            'time_in'  => 'required',
+            'time_out' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -98,8 +101,8 @@ class VehicleReportController extends Controller
 
         $contact_number = '<a href="tel: '. $vehicleReport->contact_number .'" class="text-success" target="_blank">'. $vehicleReport->contact_number .'</a>';
 
-        $created_date = date('d F, Y', strtotime($vehicleReport->time_in));
-        $updated_date = date('d F, Y', strtotime($vehicleReport->time_out));
+        $created_date = $vehicleReport->time_in;
+        $updated_date = $vehicleReport->time_out;
 
         return response()->json([
             'contact_number'    => $contact_number,
@@ -137,9 +140,9 @@ class VehicleReportController extends Controller
             'customer_experience' => 'required|string',
             'test_drive_experience' => 'required|string',
             'additional_part' => 'nullable|string',
-            'remarks' => 'nullable|string',
-            'time_in' => 'required|date',
-            'time_out' => 'required|date',
+            'remarks'  => 'nullable|string',
+            'time_in'  => 'required',
+            'time_out' => 'required',
         ]);
 
         DB::beginTransaction();
@@ -188,5 +191,14 @@ class VehicleReportController extends Controller
 
         Toastr::success('Vehicles Reports Successful Delete', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->back();
+    }
+
+    public function pdf(string $id)
+    {
+        $vehicle_pdf = VehicleReport::findOrFail($id);
+        $pdf = Pdf::loadView('admin.pages.vehicle_report.pdf', ['vehicle_pdf' => $vehicle_pdf]);
+        return $pdf->download('invoice.pdf');
+      
+        // return view('admin.pages.vehicle_report.pdf', compact('vehicle_pdf'));
     }
 }

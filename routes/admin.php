@@ -10,7 +10,8 @@ use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\WarehouseController;
-use App\Http\Controllers\VehicleReportController;
+use App\Http\Controllers\Admin\VehicleReportController;
+use App\Http\Controllers\Admin\BillingPosController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -103,5 +104,17 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::put('/vehicle-report-invoice-update/{id}', [VehicleReportController::class, 'update'])->name('vehicle-report-invoice-update');
     Route::get('/vehicle-report-invoice-view/{id}', [VehicleReportController::class, 'view'])->name('vehicle-report-invoice-view');
     Route::get('/vehicle-report-invoice-delete/{id}', [VehicleReportController::class, 'destroy'])->name('vehicle-report-invoice-delete');
+    Route::get('/vehicle-report-invoice-pdf/{id}', [VehicleReportController::class, 'pdf'])->name('vehicle-report-invoice-pdf');
+
+
+    //______ Billing POS _____//
+    Route::get('/billing-pos-invoice', [BillingPosController::class, 'index'])->name('billing-pos-invoice');
+    Route::post('/billing-pos-invoice-post', [BillingPosController::class, 'store'])->name('billing-pos-invoice-post');
+    Route::get('/billing-pos-invoice-history', [BillingPosController::class, 'history'])->name('billing-pos-invoice-history');
+    Route::get('/billing-pos-invoice-edit/{id}', [BillingPosController::class, 'edit'])->name('billing-pos-invoice-edit');
+    Route::put('/billing-pos-invoice-update/{id}', [BillingPosController::class, 'update'])->name('billing-pos-invoice-update');
+    Route::get('/billing-pos-invoice-view/{id}', [BillingPosController::class, 'view'])->name('billing-pos-invoice-view');
+    Route::get('/billing-pos-invoice-delete/{id}', [BillingPosController::class, 'destroy'])->name('billing-pos-invoice-delete');
+    Route::get('/billing-pos-invoice-pdf/{id}', [BillingPosController::class, 'pdf'])->name('billing-pos-invoice-pdf');
 
 });

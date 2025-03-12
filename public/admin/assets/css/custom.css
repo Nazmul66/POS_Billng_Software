@@ -699,4 +699,15 @@ label{
     color: #495057;
     font-weight: 500;
 }
+/* .size_field{
+    display: none;
+} */
+.total_price:readonly {
+    background-color: red; 
+    color: red;  
+}
+.select2-container {
+    width: 100% !important;
+}
+
 
