@@ -110,9 +110,9 @@
 <body>
     <div class="container">
         <div class="header">ADNAN AUTOMOBILES</div>
-        <div class="sub-header">Job Card</div>
-        <p><strong>Invoice No:</strong> #{{ $vehicle_pdf->invoice_number }}</p>
-        <p><strong>Date:</strong> {{ date('d M Y', strtotime(now())) }}, <strong>Time In:</strong> {{ $vehicle_pdf->time_in }} <strong>Time Out:</strong> {{ $vehicle_pdf->time_out }}</p>
+        <div class="sub-header">Billing Invoice</div>
+        <p><strong>Invoice No:</strong> #{{ $billing_pos->invoice_number }}</p>
+        <p><strong>Date:</strong> {{ date('d M Y', strtotime(now())) }}, <strong>Time In:</strong> {{ $billing_pos->time_in }} <strong>Time Out:</strong> {{ $billing_pos->time_out }}</p>
         
         <table class="details-table">
             <tr>
@@ -121,61 +121,110 @@
             </tr>
             <tr>
                 <td><strong>Customer Name:</strong></td>
-                <td>{{ $vehicle_pdf->customer_name }}</td>
+                <td>{{ $billing_pos->customer_name }}</td>
                 <td><strong>Car Name:</strong></td>
-                <td>{{ $vehicle_pdf->car_name }}</td>
+                <td>{{ $billing_pos->car_name }}</td>
             </tr>
             <tr>
                 <td><strong>Address:</strong></td>
-                <td>{{ $vehicle_pdf->address }}</td>
+                <td>{{ $billing_pos->address }}</td>
                 <td><strong>Registration Number:</strong></td>
-                <td>{{ $vehicle_pdf->registration_number }}</td>
+                <td>{{ $billing_pos->registration_number }}</td>
             </tr>
             <tr>
                 <td><strong>Contact Number:</strong></td>
-                <td>{{ $vehicle_pdf->contact_number }}</td>
+                <td>{{ $billing_pos->contact_number }}</td>
                 <td><strong>Chassis Number:</strong></td>
-                <td>{{ $vehicle_pdf->chassis_number }}</td>
+                <td>{{ $billing_pos->chassis_number }}</td>
             </tr>
             <tr>
                 <td><strong>Engineer Name:</strong></td>
-                <td>{{ $vehicle_pdf->engineer_name }}</td>
+                <td>{{ $billing_pos->engineer_name }}</td>
                 <td><strong>Engine Number:</strong></td>
-                <td>{{ $vehicle_pdf->engine_number }}</td>
+                <td>{{ $billing_pos->engine_number }}</td>
             </tr>
             <tr>
                 <td><strong>Mechanic Name:</strong></td>
-                <td>{{ $vehicle_pdf->mechanic_name }}</td>
+                <td>{{ $billing_pos->mechanic_name }}</td>
                 <td><strong>Color:</strong></td>
-                <td>{{ $vehicle_pdf->color }}</td>
+                <td>{{ $billing_pos->color }}</td>
             </tr>
         </table>
         
-        <div class="section-title">Description</div>
-        <table class="description-table">
+        @php
+            $products = $billing_pos->products ? json_decode($billing_pos->products) : [];
+            $product_total = 0;
+
+            foreach ($products as $val) {
+                $product_total += $val->totals;
+            }
+        @endphp
+
+        @if ( !empty($products) )
+            <div class="section-title" style="text-align: center">Additionals Part (A)</div>
+            <table class="details-table">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total Price</th>
+                </tr>
+
+                @foreach ($products as $row)
+                    <tr>
+                        <td>{{ $row->product_name }}</td>
+                        <td>{{ $row->prdt_qty }}</td>
+                        <td>{{ $row->prdt_price }}</td>
+                        <td>{{ $row->totals }}</td>
+                    </tr>
+                @endforeach
+
+                <tr>
+                    <td colspan="4" style="text-align: right;">Total (A) = {{ $product_total }}/- Tk</td>
+                </tr>
+            </table>
+        @endif
+
+
+        @php
+            $services = $billing_pos->services ? json_decode($billing_pos->services) : [];
+            $service_total = 0;
+
+            foreach ($services as $val) {
+                $service_total += $val->total_price;
+            }
+        @endphp
+
+        <div class="section-title" style="text-align: center">Installation Charge / Service Charge (B)</div>
+        <table class="details-table">
             <tr>
-                <th>Customer Experience</th>
-                <th>Test Drive Experience</th>
+                <th>Service Name</th>
+                <th>Unit Price</th>
+                <th>Total Price</th>
             </tr>
-            <tr>
-                <td>{!! $vehicle_pdf->customer_experience !!}</td>
-                <td>{!! $vehicle_pdf->test_drive_experience !!}</td>
-            </tr>
-        </table>
+
+            @foreach ($services as $row)
+                <tr>
+                    <td>{{ $row->service_name }}</td>
+                    <td>{{ $row->unit_price }}</td>
+                    <td>{{ $row->total_price }}</td>
+                </tr>
+            @endforeach
         
-        <div class="section-title">Additional Parts</div>
-        <table class="description-table">
-            <tr>
-                <td>{!! $vehicle_pdf->additional_part !!}</td>
-            </tr>
+                <tr>
+                    <td colspan="3" style="text-align: right;">Total (B) = {{ $service_total }}/- Tk</td>
+                </tr>
         </table>
 
-        <p><u>Remarks:</u> {{ $vehicle_pdf->remarks }}</p>
+        <p style="text-align: right;"> <strong>Total ( A+B )</strong> : <strong>{{ $product_total + $service_total }}/- Tk</strong> </p>
+
+
+        <p><u>Remarks:</u> {{ $billing_pos->remarks }}</p>
 
         <table class="signature_details" style="margin-top: 80px;">
             <tr>
-                <td><strong>Mechanic:</strong></td>
-                <td><strong>Service Engineer:</strong></td>
+                <td style="text-decoration: overline;"><strong>Mechanic</strong></td>
+                <td style="text-align: right; text-decoration: overline;"><strong>Service Engineer</strong></td>
             </tr>
         </table>
     </div>

@@ -23,7 +23,7 @@
 
 
 <!--breadcrumb-->
-    @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Generate Vehicle Report'])
+    @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Generate Billing POS'])
 <!--end breadcrumb-->
 
 
@@ -405,7 +405,7 @@
                 $('.body_part').append(`
                     <tr data-id="${selectedValue}">
                         <input type="hidden" value="${productId}" name="product_id[]">
-                        <input type="hidden" value="${productSlug}" class="productSlug">
+                        <input type="hidden" value="${productSlug}" name="productSlug[]" class="productSlug">
                         
                         <td>
                             <input type="text" class="form-control product_name" name="product_name[]" value="${productName}" required readonly>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\BillingPos;
 use App\Models\Product;
+use App\Models\ProductCollection;
 use App\Models\VehicleReport;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -77,6 +78,7 @@ class BillingPosController extends Controller
             for ($i = 0; $i < count($request->product_name); $i++) {
                 $products[] = [
                     'product_id' => $request->product_id[$i],
+                    'productSlug' => $request->productSlug[$i],
                     'product_name' => $request->product_name[$i],
                     'prdt_qty' => $request->prdt_qty[$i],
                     'prdt_price' => $request->prdt_price[$i],
@@ -110,7 +112,7 @@ class BillingPosController extends Controller
 
         DB::commit();
         Toastr::success('Billing POS created', 'Success', ["positionClass" => "toast-top-right"]);
-        return redirect()->back();
+        return redirect()->route('admin.billing-pos-invoice-history');
     }
 
     /**
@@ -121,17 +123,7 @@ class BillingPosController extends Controller
         $billing_pos  = BillingPos::find($id);
         // dd($billing_pos);
 
-        $contact_number = '<a href="tel: '. $billing_pos->contact_number .'" class="text-success" target="_blank">'. $billing_pos->contact_number .'</a>';
-
-        $created_date = $billing_pos->time_in;
-        $updated_date = $billing_pos->time_out;
-
-        return response()->json([
-            'contact_number'    => $contact_number,
-            'success'           => $billing_pos,
-            'created_date'      => $created_date,
-            'updated_date'      => $updated_date,
-        ]);
+        return view('admin.pages.billing_pos.view', compact('billing_pos'));
     }
 
     /**
@@ -139,8 +131,9 @@ class BillingPosController extends Controller
      */
     public function edit(string $id)
     {
+        $products = Product::orderBy('id', 'DESC')->get();
         $billing_pos = BillingPos::findOrFail($id);
-        return view('admin.pages.billing_pos.edit', compact('billing_pos'));
+        return view('admin.pages.billing_pos.edit', compact('billing_pos', 'products'));
     }
 
     /**
@@ -148,6 +141,7 @@ class BillingPosController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // dd($request->all());
         $request->validate([
             'customer_name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -159,10 +153,7 @@ class BillingPosController extends Controller
             'chassis_number' => 'required|string|max:255',
             'engine_number' => 'required|string|max:255',
             'color' => 'required|string|max:255',
-            'customer_experience' => 'required|string',
-            'test_drive_experience' => 'required|string',
-            'additional_part' => 'nullable|string',
-            'remarks'  => 'nullable|string',
+            'remarks' => 'nullable|string',
             'time_in'  => 'required',
             'time_out' => 'required',
         ]);
@@ -181,12 +172,38 @@ class BillingPosController extends Controller
             $billing_pos->chassis_number         = $request->chassis_number;
             $billing_pos->engine_number          = $request->engine_number;
             $billing_pos->color                  = $request->color;
-            $billing_pos->customer_experience    = $request->customer_experience;
-            $billing_pos->test_drive_experience  = $request->test_drive_experience;
-            $billing_pos->additional_part        = $request->additional_part;
             $billing_pos->remarks                = $request->remarks;
             $billing_pos->time_in                = $request->time_in;
             $billing_pos->time_out               = $request->time_out;
+            
+            $products = [];
+            if (!empty($request->product_id) && is_array($request->product_name)) { 
+                for ($i = 0; $i < count($request->product_name); $i++) {
+                    $products[] = [
+                        'product_id' => $request->product_id[$i] ?? null,
+                        'productSlug' => $request->productSlug[$i] ?? null,
+                        'product_name' => $request->product_name[$i] ?? null,
+                        'prdt_qty' => $request->prdt_qty[$i] ?? 0,
+                        'prdt_price' => $request->prdt_price[$i] ?? 0,
+                        'totals' => $request->totals[$i] ?? 0,
+                    ];
+                }
+            }
+
+
+            $services = [];
+            for ($i = 0; $i < count($request->service_name); $i++) {
+                $services[] = [
+                    'service_name' => $request->service_name[$i],
+                    'unit_price' => $request->unit_price[$i],
+                    'total_price' => $request->total_price[$i],
+                ];
+            }
+
+            // dd($services);
+            $billing_pos->products               = $products ? json_encode($products) : NULL;
+            $billing_pos->services               = json_encode($services);
+
             // dd($billing_pos);
             $billing_pos->update();
         }
@@ -194,12 +211,12 @@ class BillingPosController extends Controller
             DB::rollBack();
             // throw $ex;
             dd($ex);
-            Toastr::error('Billing POS Updated Shown Error', 'Error', ["positionClass" => "toast-top-right"]);
+            Toastr::error('Billing POS Update Shown Error', 'Error', ["positionClass" => "toast-top-right"]);
             return redirect()->back();
         }
 
         DB::commit();
-        Toastr::success('Billing POS Updated', 'Success', ["positionClass" => "toast-top-right"]);
+        Toastr::success('Billing POS Update', 'Success', ["positionClass" => "toast-top-right"]);
         return redirect()->route('admin.billing-pos-invoice-history');
     }
 
@@ -219,6 +236,8 @@ class BillingPosController extends Controller
     {
         $billing_pos = BillingPos::findOrFail($id);
         $pdf = Pdf::loadView('admin.pages.billing_pos.pdf', ['billing_pos' => $billing_pos]);
-        return $pdf->download('invoice.pdf');
+        return $pdf->download('bill-invoice.pdf');
+
+        // return view('admin.pages.billing_pos.pdf', compact('billing_pos'));
     }
 }

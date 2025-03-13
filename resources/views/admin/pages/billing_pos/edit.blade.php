@@ -5,7 +5,7 @@
 @endpush
 
 @push('meta-title')
-    Edit Vehicle Report
+    Edit Billing Pos
 @endpush
 
 @push('add-css')
@@ -14,23 +14,22 @@
 @endpush
 
 {{-- Active Menu Sidebar --}}
-@section("invoice", 'mm-active')
-@section("invoice_show", 'mm-show')
-@section("vehicle_report", 'mm-active')
+@section("bill-invoice", 'mm-active')
+@section("bill-invoice_show", 'mm-show')
+@section("billing_pos_index", 'mm-active')
 
 
 @section('body-content')
 
 
 <!--breadcrumb-->
-    @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Edit Vehicle Report'])
+    @include('admin.include.breadcrumb', ['breadcrumb_name' => 'Update Billing POS'])
 <!--end breadcrumb-->
 
 
 <div class="card">
     <div class="card-body p-5">
-
-       <form action="{{ route('admin.vehicle-report-invoice-update', $vehicles_report->id) }}" method="POST">
+       <form action="{{ route('admin.billing-pos-invoice-update', $billing_pos->id) }}" method="POST">
             @csrf
             @method('PUT')
             
@@ -45,9 +44,6 @@
                 </div>
 
                 <div class="col-md-5">
-                    @php
-                        $inv = "INV-" . rand(10000000, 99999999);
-                    @endphp
                     <div class="row align-items-center mb-2">
                         <div class="col-lg-4">
                             <div class="form__input-title">
@@ -56,7 +52,7 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="form__input">
-                                <input id="invoiceNumber" type="text" class="form-control" value="{{ $vehicles_report->invoice_number }}" placeholder="#MZ-00114" disabled>
+                                <input id="invoiceNumber" type="text" class="form-control" value="{{ $billing_pos->invoice_number }}" disabled>
                             </div>
                         </div>
                     </div>
@@ -69,7 +65,7 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="form__input">
-                                <input class="form-control" id="basicInput" name="time_in" type="text" placeholder="Select Date" value="{{ $vehicles_report->time_in }}">
+                                <input class="form-control" id="basicInput" name="time_in" type="text" placeholder="Select Date" value="{{ $billing_pos->time_in }}">
                             </div>
                         </div>
                     </div>
@@ -82,7 +78,7 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="form__input">
-                                <input class="form-control" type="text" name="time_out" id="basicInput2" placeholder="Select Date" value="{{ $vehicles_report->time_out }}">
+                                <input class="form-control" type="text" name="time_out" id="basicInput2" placeholder="Select Date" value="{{ $billing_pos->time_out }}">
                             </div>
                         </div>
                     </div>
@@ -104,7 +100,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" name="customer_name" id="shippinggName" value="{{ $vehicles_report->customer_name }}" placeholder="Customer Name:" required="">
+                            <input type="text" class="form-control" name="customer_name" id="shippinggName" value="{{ $billing_pos->customer_name }}" placeholder="Customer Name:" required="">
                         </div>
                     </div>
 
@@ -115,7 +111,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" value="{{ $vehicles_report->address }}" name="address" id="register" placeholder="Address" required="">
+                            <input type="text" class="form-control" value="{{ $billing_pos->address }}" name="address" id="register" placeholder="Address" required="">
                         </div>
                     </div>
 
@@ -126,7 +122,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" name="contact_number" id="Chassis" placeholder="Contact Number" value="{{ $vehicles_report->contact_number }}" required="">
+                            <input type="text" class="form-control" name="contact_number" id="Chassis" placeholder="Contact Number" value="{{ $billing_pos->contact_number }}" required="">
                         </div>
                     </div>
 
@@ -137,7 +133,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" name="engineer_name" id="shippinggNumber" value="{{ $vehicles_report->engineer_name }}" placeholder="Engineer Name" required="">
+                            <input type="text" class="form-control" name="engineer_name" id="shippinggNumber" value="{{ $billing_pos->engineer_name }}" placeholder="Engineer Name" required="">
                         </div>
                     </div>
 
@@ -148,7 +144,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" name="mechanic_name" id="Mechanic" placeholder="Mechanic Name" value="{{ $vehicles_report->mechanic_name }}" required="">
+                            <input type="text" class="form-control" name="mechanic_name" id="Mechanic" placeholder="Mechanic Name" value="{{ $billing_pos->mechanic_name }}" required="">
                         </div>
                     </div>
                 </div>
@@ -165,7 +161,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" value="{{ $vehicles_report->car_name }}" name="car_name" id="shippinggName" placeholder="Car Name" required="">
+                            <input type="text" class="form-control" value="{{ $billing_pos->car_name }}" name="car_name" id="shippinggName" placeholder="Car Name" required="">
                         </div>
                     </div>
 
@@ -176,7 +172,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" id="register" placeholder="Registration Number" value="{{ $vehicles_report->registration_number }}" name="registration_number" required="">
+                            <input type="text" class="form-control" id="register" placeholder="Registration Number" value="{{ $billing_pos->registration_number }}" name="registration_number" required="">
                         </div>
                     </div>
 
@@ -187,7 +183,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" id="Chassis" placeholder="Chassis Number" name="chassis_number" value="{{ $vehicles_report->chassis_number }}" required="">
+                            <input type="text" class="form-control" id="Chassis" placeholder="Chassis Number" name="chassis_number" value="{{ $billing_pos->chassis_number }}" required="">
                         </div>
                     </div>
 
@@ -198,7 +194,7 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" id="shippinggNumber" placeholder="Engine Number" value="{{ $vehicles_report->engine_number }}" name="engine_number" required="">
+                            <input type="text" class="form-control" id="shippinggNumber" placeholder="Engine Number" value="{{ $billing_pos->engine_number }}" name="engine_number" required="">
                         </div>
                     </div>
 
@@ -209,44 +205,115 @@
                             </div>
                         </div>
                         <div class="col-lg-7">
-                            <input type="text" class="form-control" name="color" id="Color" placeholder="Color" value="{{ $vehicles_report->color }}" required="">
+                            <input type="text" class="form-control" name="color" id="Color" placeholder="Color" value="{{ $billing_pos->color }}" required="">
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-xl-12">
-                    <div class="mt-5">
-                        <label class="form-label" for="customer_experience">Customer Experience <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="customer_experience" name="customer_experience" rows="8" placeholder="Customer Experience....">{!! $vehicles_report->customer_experience !!}</textarea>
+                <div class="col-xl-12 size_field">
+                    <label class="form-label mt-5 mb-2">All Products <span class="text-danger">*</span></label>
+
+                    <div class="form__input" style="max-width: 100%; width: 50%;">
+                        <select name="bulk_product" id="bulk_product">
+                            <option value="" disabled selected>Please select a product</option>
+                            <option value="waste_field">Waste Field</option>
+                            @foreach ($products as $row)
+                                <option value="{{ $row->slug }}" data-image-url="{{ asset($row->thumb_image) }}" data-slug={{ $row->slug }} data-name={{ $row->name }} data-id="{{ $row->id }}" data-qty={{ $row->qty }} data-price={{ $row->price }} data-offer_price={{ $row->offer_price ?? 0 }}>{{ $row->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    @php
+                        $productss = $billing_pos->products ? json_decode($billing_pos->products) : [];
+                    @endphp
+
+                    <div class="">
+                        <table class="table mb-0">
+                            <tbody class="body_part">
+                                @foreach ($productss as $key => $row)
+                                    <tr data-id="{{ $row->productSlug }}">
+
+                                        <input type="hidden" value="{{ $row->product_id }}" name="product_id[]">
+                                        <input type="hidden" value="{{ $row->productSlug }}" name="productSlug[]" class="productSlug">
+                                        
+                                        <td>
+                                            <input type="text" class="form-control product_name" name="product_name[]" value="{{ $row->product_name }}" required readonly>
+                                        </td>
+                                        <td>
+                                            <input type="number" min="1" value="{{ $row->prdt_qty }}" class="form-control prdt_qty" name="prdt_qty[]" required>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control prdt_price" name="prdt_price[]" value="{{ $row->prdt_price }}" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control totals" value="{{ $row->totals }}" name="totals[]" readonly>
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void(0);" class="text-danger remove-product" style="font-size: 26px; line-height: 24px;"> <i class='bx bx-x'></i> </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="col-xl-12">
-                    <div class="mt-4">
-                        <label class="form-label" for="test_drive_experience">Test Drive Experience <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="test_drive_experience" name="test_drive_experience" rows="8" placeholder="Test Drive Experience....">{!! $vehicles_report->test_drive_experience !!}</textarea>
-                    </div>
-                </div>
+                <div class="col-xl-12 size_field">
+                    <label class="form-label mt-5 mb-2">Installation Charge / Service Charge <span class="text-danger">*</span></label>
 
-                <div class="col-xl-12">
-                    <div class="mt-4">
-                        <label class="form-label" for="additional_part">Additional Part <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="additional_part" name="additional_part" rows="8" placeholder="Additional Part....">{!! $vehicles_report->additional_part !!}</textarea>
+                    <div class="table-responsive text-nowrap mb-3">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Service Name</th>
+                                    <th>Unit Price ($)</th>
+                                    <th>Total Price ($)</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            @php
+                                $services = json_decode($billing_pos->services);
+                            @endphp
+
+                            <tbody class="table-border-bottom-0 table_extend">
+                                @foreach ($services as $key => $row)
+                                    <tr>
+                                        <td>
+                                            <input type="text" value="{{ $row->service_name }}" class="form-control service_name"  name="service_name[]" required>
+                                        </td>
+                                        <td>
+                                            <input type="number" value="{{ $row->unit_price }}" class="form-control unit_price" name="unit_price[]" required>
+                                        </td>
+                                        <td>
+                                            <input type="number" value="{{ $row->total_price }}" class="form-control total_price"  name="total_price[]" readonly>
+                                        </td>
+                                        <td>
+                                            @if ( $key == 0 )
+                                                <button type="button" class="btn btn-info">Add</button>
+                                            @else
+                                                <button type="button" class="btn btn-danger">Remove</button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
                 <div class="col-xl-12">
                     <div class="mt-4">
                         <label class="form-label" for="Remarks">Remarks</label>
-                        <input type="text" class="form-control" value="{{ $vehicles_report->remarks }}" name="remarks" id="Remarks" placeholder="Remarks" >
+                        <input type="text" class="form-control" name="remarks" id="Remarks" placeholder="Remarks" value="{{ $billing_pos->remarks }}">
                     </div>
                 </div>
             </div>
 
             <div class="d-flex justify-content-center align-items-center mt-5">
-                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                <button type="submit" id="btn-store" class="btn btn-primary waves-effect waves-light">Update</button>
             </div>
        </form>
     </div>
@@ -255,10 +322,48 @@
 @endsection
 
 @push('add-js')
-    <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('admin/assets/plugins/flatpickr/flatpickr.min.js') }}"></script>
 
     <script>
+    $(document).ready(function(){
+            $(document).on("input", ".unit_price", function() {
+                var unitPrice = $(this).val();
+                console.log(unitPrice);
+                var totalPriceInput = $(this).closest('tr').find('.total_price');
+
+                if (unitPrice) {
+                    totalPriceInput.val(unitPrice); // Set total_price to the same value as unit_price
+                } else {
+                    totalPriceInput.val(''); // Clear total_price if unit_price is empty
+                }
+            });
+
+            // add new input rows
+            $(document).on("click", ".btn-info", function(){
+                $('.table_extend').append(`
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control service_name" name="service_name[]" required>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control unit_price" name="unit_price[]" required>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control total_price" name="total_price[]" readonly>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger">Remove</button>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            // delete all single input rows
+            $(document).on("click", ".btn-danger", function(){
+                $(this).closest("tr").remove();
+            })
+
             $("#basicInput").flatpickr({
                 enableTime: true,
                 noCalendar: true,
@@ -271,38 +376,143 @@
                 dateFormat: "h:i K",  // 'K' adds AM/PM
             });
 
-        $(document).ready(function(){
-            let jReq;
-            ClassicEditor
-                .create(document.querySelector('#customer_experience'))
-                .then(newEditor => {
-                    jReq = newEditor;
-                })
-                .catch(error => {
-                    console.error(error);
+
+            // Disable already selected options
+            $('#bulk_product option').prop('disabled', false);
+
+            @if (!empty($productss) && count($productss) > 0)
+                @foreach ($productss as $item)
+                    var selectedValue = "{{ $item->productSlug }}";
+                    var option = $('#bulk_product').find('option[value="' + selectedValue + '"]');
+                    if (option.length > 0) {
+                        option.prop('disabled', true);
+                    }
+                @endforeach
+            @endif
+
+            // Multiple Product selection
+            $('#bulk_product').select2({
+                templateResult: formatState,  
+                templateSelection: formatState, 
+            });
+
+            function formatState (state) {
+                if (!state.id) {
+                    return state.text; // Return text for disabled option
+                }
+
+                var imageUrl = $(state.element).data('image-url'); // Access image URL from data attribute
+
+                if (!imageUrl) {
+                    return state.text; // Return text if no image URL is available
+                }
+
+                var $state = $(
+                    '<span><img src="' + imageUrl + '" style="width: 35px; height: 30px; margin-right: 8px;" /> ' + state.text + '</span>'
+                );
+                return $state;
+            };
+
+            // When a new product is selected
+            $('#bulk_product').on('select2:select', function (e) {
+                const selectedValue  =  e.params.data.id; 
+                const selectedOption  =  $(e.params.data.element); 
+                const productId  =  selectedOption.data('id'); 
+                const productQty  =  selectedOption.data('qty'); 
+                const productName  =  selectedOption.data('name'); 
+                const productSlug  =  selectedOption.data('slug'); 
+                const product_offer_price  =  selectedOption.data('offer_price') || 0; 
+                const productImage  =  selectedOption.data('image-url'); // Get the product image URL
+
+                // Disable the option in the dropdown
+                selectedOption.prop('disabled', true);
+                    $('#bulk_product').select2({   // Reinitialize Select2 to reflect the changes
+                        templateResult: formatState,
+                        templateSelection: formatState,
+                    });
+
+                    // Format options in Select2
+                    function formatState(state) {
+                        if (!state.id) {
+                            return state.text;
+                        }
+                        const imageUrl = $(state.element).data('image-url');
+                        if (!imageUrl) {
+                            return state.text;
+                        }
+                        return $(`
+                            <span>
+                                <img src="${imageUrl}" style="width: 35px; height: 30px; margin-right: 8px;" /> 
+                                ${state.text}
+                            </span>
+                        `);
+                    }
+
+                // Append the selected product to the table
+                $('.body_part').append(`
+                    <tr data-id="${productId}" data-slug="${selectedValue}">
+                        <input type="hidden" value="${productId}" name="product_id[]">
+                        <input type="hidden" value="${productSlug}" name="productSlug[]" class="productSlug">
+                        
+                        <td>
+                            <input type="text" class="form-control product_name" name="product_name[]" value="${productName}" required readonly>
+                        </td>
+                        <td>
+                            <input type="number" min="1" value="1" class="form-control prdt_qty" name="prdt_qty[]" required>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control prdt_price" name="prdt_price[]" value="${product_offer_price}" readonly>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control totals" value="${product_offer_price * 1}" name="totals[]" readonly>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" class="text-danger remove-product" style="font-size: 26px; line-height: 24px;">
+                                <i class='bx bx-x'></i>
+                            </a>
+                        </td>
+                    </tr>
+                `);
+
+
+            // Handle Quantity Change (for both preloaded & new rows)
+            $(document).on("input", ".prdt_qty", function () {
+                var qty = $(this).val();
+                if (qty === "" || qty <= 0) {
+                    $(this).val(1);
+                    toastr.error("Quantity must be at least 1!");
+                }
+
+                var price = $(this).closest("tr").find(".prdt_price").val();
+                var totalField = $(this).closest("tr").find(".totals");
+
+                var total = (qty && price) ? (qty * price) : 0;
+                totalField.val(total);
+            });
+
+
+            // Handle removal of a product from the table
+            $(document).on('click', '.remove-product', function (e) {
+                e.preventDefault(); // Prevents any default behavior
+                var row = $(this).closest('tr'); // Find the closest table row
+                var productSlug = row.find(".productSlug").val(); // Get product slug
+
+                // Enable the removed product in the dropdown again
+                $("#bulk_product option[value='" + productSlug + "']").prop("disabled", false);
+                $('#bulk_product').val(null).trigger("change"); // Reset dropdown selection
+
+                // Reinitialize Select2 for dropdown
+                $('#bulk_product').select2({
+                    templateResult: formatState,
+                    templateSelection: formatState,
                 });
 
+                row.remove(); // Remove the row from the table
+                toastr.success("Product removed successfully!"); // Show success message
+            });
 
-            let jReqa;
-            ClassicEditor
-                .create(document.querySelector('#test_drive_experience'))
-                .then(newEditor => {
-                    jReqa = newEditor;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+        });
 
-
-            let jReqs;
-            ClassicEditor
-                .create(document.querySelector('#additional_part'))
-                .then(newEditor => {
-                    jReqs = newEditor;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        })
+    });
     </script>
 @endpush
