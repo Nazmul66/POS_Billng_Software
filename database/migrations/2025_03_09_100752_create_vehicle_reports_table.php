@@ -24,12 +24,16 @@ return new class extends Migration
             $table->string('chassis_number');
             $table->string('engine_number');
             $table->string('color');
+            $table->string('driver_name');
+            $table->string('reference_number');
+            $table->string('vehicle_model');
+            $table->string('mileage');
             $table->text('customer_experience');
             $table->text('test_drive_experience');
             $table->text('additional_part')->nullable();
             $table->text('remarks')->nullable();
-            $table->date('time_in');
-            $table->date('time_out');
+            $table->date('time_in')->nullable();
+            $table->date('time_out')->nullable();
             $table->timestamps();
         });
     }

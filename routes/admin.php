@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\VehicleReportController;
 use App\Http\Controllers\Admin\BillingPosController;
+use App\Http\Controllers\Admin\QNAController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -56,6 +57,13 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::get('/unit-data', [UnitController::class, 'getData'])->name('unit-data');
     Route::post('/unit/status', [UnitController::class, 'changeUnitStatus'])->name('unit.status');
     Route::get('/units/view/{id}', [UnitController::class, 'unitView'])->name('unit.view');
+
+
+    //______ Q&A _____//
+    Route::resource('/qna', QNAController::class)->names('qna');
+    Route::get('/qna-data', [QNAController::class, 'getData'])->name('qna-data');
+    Route::post('/qna/status', [QNAController::class, 'changeQnaStatus'])->name('qna.status');
+    Route::get('/qna/view/{id}', [QNAController::class, 'qnaView'])->name('qna.view');
 
 
     //______ Customers _____//

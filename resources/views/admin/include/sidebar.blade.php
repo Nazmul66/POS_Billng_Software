@@ -60,6 +60,15 @@
             </a>
         </li>
 
+        <li class="@yield('qna')">
+            <a href="{{ route('admin.qna.index') }}">
+                <div class="parent-icon">
+                    <i class='bx bx-question-mark'></i>
+                </div>
+                <div class="menu-title">Q&A</div>
+            </a>
+        </li>
+
 
         {{-- Invoice --}}
         <li class="menu-label">Invoice</li>
@@ -79,7 +88,7 @@
 
         <li class="@yield('bill-invoice')">
             <a href="javascript:;" class="has-arrow" aria-expanded="false">
-                <div class="parent-icon"><i class="bx bx-cart"></i>
+                <div class="parent-icon"><i class='bx bx-devices'></i>
                 </div>
                 <div class="menu-title">Billing POS</div>
             </a>
@@ -102,17 +111,17 @@
             </a>
         </li>
 
-        <li class="@yield('low-product')">
+        {{-- <li class="@yield('low-product')">
             <a href="{{ route('admin.low.stock.product') }}">
                 <div class="parent-icon">
                     <i class='bx bx-cart' ></i>
                 </div>
                 <div class="menu-title">Low Stock Products</div>
             </a>
-        </li>
+        </li> --}}
 
         {{-- People --}}
-        <li class="menu-label">People</li>
+        {{-- <li class="menu-label">People</li>
         <li class="@yield('customer')">
             <a href="{{ route('admin.customer.index') }}">
                 <div class="parent-icon">
@@ -147,7 +156,7 @@
                 </div>
                 <div class="menu-title">Warehouse</div>
             </a>
-        </li>
+        </li> --}}
 
     </ul>
     <!--end navigation-->

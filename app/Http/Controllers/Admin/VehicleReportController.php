@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerExperience;
+use App\Models\Qna;
+use App\Models\TestDriveExperience;
 use App\Models\VehicleReport;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -16,7 +19,8 @@ class VehicleReportController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.vehicle_report.index');
+        $qnas = Qna::where('status', 1)->get();  
+        return view('admin.pages.vehicle_report.index', compact('qnas'));
     }
 
     /**
@@ -46,12 +50,19 @@ class VehicleReportController extends Controller
             'chassis_number' => 'required|string|max:255',
             'engine_number' => 'required|string|max:255',
             'color' => 'required|string|max:255',
-            'customer_experience' => 'required|string',
-            'test_drive_experience' => 'required|string',
+            'driver_name' => 'required|string|max:255',
+            'reference_number' => 'required|string|max:255',
+            'vehicle_model' => 'required|string|max:255',
+            'mileage' => 'required|string|max:255',
             'additional_part' => 'nullable|string',
             'remarks' => 'nullable|string',
-            'time_in'  => 'required',
-            'time_out' => 'required',
+
+            'customer_feedback' => 'required|array',
+            'customer_feedback.*' => 'required|string',
+            'customer_answer' => 'required|array',
+            'test_drive' => 'required|array',
+            'test_drive.*' => 'required|string',
+            'feedback_answer' => 'required|array',
         ]);
 
         DB::beginTransaction();
@@ -69,14 +80,34 @@ class VehicleReportController extends Controller
             $vehicleReport->chassis_number         = $request->chassis_number;
             $vehicleReport->engine_number          = $request->engine_number;
             $vehicleReport->color                  = $request->color;
-            $vehicleReport->customer_experience    = $request->customer_experience;
-            $vehicleReport->test_drive_experience  = $request->test_drive_experience;
+            $vehicleReport->driver_name            = $request->driver_name;
+            $vehicleReport->reference_number       = $request->reference_number;
+            $vehicleReport->vehicle_model          = $request->vehicle_model;
+            $vehicleReport->mileage                = $request->mileage;
             $vehicleReport->additional_part        = $request->additional_part;
             $vehicleReport->remarks                = $request->remarks;
-            $vehicleReport->time_in                = $request->time_in;
-            $vehicleReport->time_out               = $request->time_out;
+
             // dd($vehicleReport);
             $vehicleReport->save();
+
+
+            // Save customer experiences
+            foreach ($request->customer_feedback as $index => $feedback) {
+                CustomerExperience::create([
+                    'vehicle_report_id' => $vehicleReport->id,
+                    'customer_feedback' => $feedback,
+                    'customer_answer' => $request->customer_answer[$index],
+                ]);
+            }
+
+            // Save test drive experiences
+            foreach ($request->test_drive as $index => $testDrive) {
+                TestDriveExperience::create([
+                    'vehicle_report_id' => $vehicleReport->id,
+                    'test_drive' => $testDrive,
+                    'feedback_answer' => $request->feedback_answer[$index],
+                ]);
+            }
         }
         catch(\Exception $ex){
             DB::rollBack();
@@ -117,8 +148,11 @@ class VehicleReportController extends Controller
      */
     public function edit(string $id)
     {
+        $qnas = Qna::where('status', 1)->get();  
         $vehicles_report = VehicleReport::findOrFail($id);
-        return view('admin.pages.vehicle_report.edit', compact('vehicles_report'));
+        $customerExperiences = CustomerExperience::where('vehicle_report_id', $id)->get();
+        $testDriveExperiences = TestDriveExperience::where('vehicle_report_id', $id)->get();
+        return view('admin.pages.vehicle_report.edit', compact('vehicles_report', 'qnas', 'customerExperiences', 'testDriveExperiences'));
     }
 
     /**
@@ -137,12 +171,17 @@ class VehicleReportController extends Controller
             'chassis_number' => 'required|string|max:255',
             'engine_number' => 'required|string|max:255',
             'color' => 'required|string|max:255',
-            'customer_experience' => 'required|string',
-            'test_drive_experience' => 'required|string',
+            'driver_name' => 'required|string|max:255',
+            'reference_number' => 'required|string|max:255',
+            'vehicle_model' => 'required|string|max:255',
+            'mileage' => 'required|string|max:255',
             'additional_part' => 'nullable|string',
-            'remarks'  => 'nullable|string',
-            'time_in'  => 'required',
-            'time_out' => 'required',
+            'remarks' => 'nullable|string',
+
+            'customer_feedback' => 'nullable|array',
+            'customer_answer' => 'nullable|array',
+            'test_drive' => 'nullable|array',
+            'feedback_answer' => 'nullable|array',
         ]);
 
         DB::beginTransaction();
@@ -159,14 +198,41 @@ class VehicleReportController extends Controller
             $vehicleReport->chassis_number         = $request->chassis_number;
             $vehicleReport->engine_number          = $request->engine_number;
             $vehicleReport->color                  = $request->color;
-            $vehicleReport->customer_experience    = $request->customer_experience;
-            $vehicleReport->test_drive_experience  = $request->test_drive_experience;
+            $vehicleReport->driver_name            = $request->driver_name;
+            $vehicleReport->reference_number       = $request->reference_number;
+            $vehicleReport->vehicle_model          = $request->vehicle_model;
+            $vehicleReport->mileage                = $request->mileage;
             $vehicleReport->additional_part        = $request->additional_part;
             $vehicleReport->remarks                = $request->remarks;
-            $vehicleReport->time_in                = $request->time_in;
-            $vehicleReport->time_out               = $request->time_out;
             // dd($vehicleReport);
             $vehicleReport->update();
+
+
+            // Delete old experiences
+            CustomerExperience::where('vehicle_report_id', $vehicleReport->id)->delete();
+            TestDriveExperience::where('vehicle_report_id', $vehicleReport->id)->delete();
+            
+            // Save customer experiences
+            foreach ($request->customer_feedback as $index => $feedback) {
+                if (!isset($request->customer_answer[$index])) continue;
+
+                CustomerExperience::create([
+                    'vehicle_report_id' => $vehicleReport->id,
+                    'customer_feedback' => $feedback,
+                    'customer_answer' => $request->customer_answer[$index],
+                ]);
+            }
+
+            // Save test drive experiences
+            foreach ($request->test_drive as $index => $testDrive) {
+                if (!isset($request->feedback_answer[$index])) continue;
+
+                TestDriveExperience::create([
+                    'vehicle_report_id' => $vehicleReport->id,
+                    'test_drive' => $testDrive,
+                    'feedback_answer' => $request->feedback_answer[$index],
+                ]);
+            }
         }
         catch(\Exception $ex){
             DB::rollBack();

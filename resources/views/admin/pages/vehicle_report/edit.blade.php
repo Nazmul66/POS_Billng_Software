@@ -8,6 +8,7 @@
     Edit Vehicle Report
 @endpush
 
+
 @push('add-css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('admin/assets/plugins/flatpickr/flatpickr.min.css') }}">
@@ -61,7 +62,7 @@
                         </div>
                     </div>
 
-                    <div class="row align-items-center mb-2">
+                    {{-- <div class="row align-items-center mb-2">
                         <div class="col-lg-4">
                             <div class="form__input-title">
                                 <label for="basicInput">Time In :</label>
@@ -85,7 +86,7 @@
                                 <input class="form-control" type="text" name="time_out" id="basicInput2" placeholder="Select Date" value="{{ $vehicles_report->time_out }}">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -141,7 +142,7 @@
                         </div>
                     </div>
 
-                    <div class="row align-items-center mb-10">
+                    <div class="row align-items-center mb-2">
                         <div class="col-lg-5">
                             <div class="form__input-title">
                                 <label for="Mechanic" class="m-0">Mechanic Name</label>
@@ -149,6 +150,28 @@
                         </div>
                         <div class="col-lg-7">
                             <input type="text" class="form-control" name="mechanic_name" id="Mechanic" placeholder="Mechanic Name" value="{{ $vehicles_report->mechanic_name }}" required="">
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center mb-2">
+                        <div class="col-lg-5">
+                            <div class="form__input-title">
+                                <label for="Driver" class="m-0">Driver Name</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" name="driver_name" id="Driver" placeholder="Driver Name" required="" value="{{ $vehicles_report->driver_name }}">
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center mb-2">
+                        <div class="col-lg-5">
+                            <div class="form__input-title">
+                                <label for="Reference" class="m-0">Reference Number</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" name="reference_number" id="Reference" placeholder="Reference Number" required="" value="{{ $vehicles_report->reference_number }}">
                         </div>
                     </div>
                 </div>
@@ -202,7 +225,7 @@
                         </div>
                     </div>
 
-                    <div class="row align-items-center mb-10">
+                    <div class="row align-items-center mb-2">
                         <div class="col-lg-5">
                             <div class="form__input-title">
                                 <label for="Color" class="m-0">Color</label>
@@ -212,21 +235,140 @@
                             <input type="text" class="form-control" name="color" id="Color" placeholder="Color" value="{{ $vehicles_report->color }}" required="">
                         </div>
                     </div>
+
+                    
+                    <div class="row align-items-center mb-2">
+                        <div class="col-lg-5">
+                            <div class="form__input-title">
+                                <label for="vehcle_model" class="m-0">Vehcle Model</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" name="vehicle_model" id="vehcle_model" value="{{ $vehicles_report->vehicle_model }}" placeholder="Vehcle Model...." required="">
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center mb-10">
+                        <div class="col-lg-5">
+                            <div class="form__input-title">
+                                <label for="Mileage" class="m-0">Mileage</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <input type="text" class="form-control" name="mileage" id="Mileage" placeholder="Mileage" value="{{$vehicles_report->mileage }}" required="">
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
+                {{-- Customer Experience --}}
                 <div class="col-xl-12">
-                    <div class="mt-5">
-                        <label class="form-label" for="customer_experience">Customer Experience <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="customer_experience" name="customer_experience" rows="8" placeholder="Customer Experience....">{!! $vehicles_report->customer_experience !!}</textarea>
+                    <label class="form-label mt-5 mb-2">Customer Experience <span class="text-danger">*</span></label>
+
+                    <div class="table-responsive text-nowrap mb-3">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Customer Feedback</th>
+                                    <th>Feedback Answer</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="table-border-bottom-0 table_extend">
+                                @foreach ($customerExperiences as $index => $cus_exp)
+                                    <tr>
+                                        <td style="max-width: 300px;">
+                                            <textarea name="customer_feedback[]" class="form-control" id="" cols="20" rows="5" required>{{ $cus_exp->customer_feedback }}</textarea>
+                                        </td>
+                                        <td style="max-width: 300px;">
+                                            <select class="form-control feedback_answer2" name="customer_answer[]"   required>
+                                                <option value="" disabled>Select the options</option>
+                                                @foreach ($qnas as $row)
+                                                    <option value="{{ $row->id }}" @if( $row->id == $cus_exp->customer_answer ) selected @endif>({{ $row->id }}) {{ \Illuminate\Support\Str::words($row->answer, 6, '...') }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger">Remove</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                <tr>
+                                    <td style="max-width: 300px;">
+                                        <textarea name="customer_feedback[]" class="form-control" id="" cols="20" rows="5"></textarea>
+                                    </td>
+                                    <td style="max-width: 300px;">
+                                        <select class="form-control feedback_answer2" name="customer_answer[]">
+                                            <option value="" disabled selected>Select the options</option>
+                                            @foreach ($qnas as $row)
+                                                <option value="{{ $row->id }}">({{ $row->id }}) {{ \Illuminate\Support\Str::words($row->answer, 6, '...') }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-info btn_customer">Add</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
+                
+                {{-- Test Drive Experience --}}
                 <div class="col-xl-12">
-                    <div class="mt-4">
-                        <label class="form-label" for="test_drive_experience">Test Drive Experience <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="test_drive_experience" name="test_drive_experience" rows="8" placeholder="Test Drive Experience....">{!! $vehicles_report->test_drive_experience !!}</textarea>
+                    <label class="form-label mt-5 mb-2">Test Drive Experience <span class="text-danger">*</span></label>
+
+                    <div class="table-responsive text-nowrap mb-3">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Test Drive Feedback</th>
+                                    <th>Feedback Answer</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="table-border-bottom-0 table_extendss">
+                                @foreach ($testDriveExperiences as $index => $test_exp)
+                                    <tr>
+                                        <td style="max-width: 300px;">
+                                            <textarea name="test_drive[]" class="form-control" id="" cols="20" rows="5" required>{{ $test_exp->test_drive }}</textarea>
+                                        </td>
+                                        <td style="max-width: 300px;">
+                                            <select class="form-control feedback_answer" name="feedback_answer[]" id="feedback_answer"  required>
+                                                <option value="" disabled>Select the options</option>
+                                                @foreach ($qnas as $row)
+                                                    <option value="{{ $row->id }}" @if( $row->id == $test_exp->feedback_answer ) selected @endif>({{ $row->id }}) {{ \Illuminate\Support\Str::words($row->answer, 6, '...') }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger">Remove</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                <tr>
+                                    <td style="max-width: 300px;">
+                                        <textarea name="test_drive[]" class="form-control" id="" cols="20" rows="5"></textarea>
+                                    </td>
+                                    <td style="max-width: 300px;">
+                                        <select class="form-control" name="feedback_answer[]"  id="feedback_answer">
+                                            <option value="" disabled selected>Select the options</option>
+                                            @foreach ($qnas as $row)
+                                                <option value="{{ $row->id }}">({{ $row->id }}) {{ \Illuminate\Support\Str::words($row->answer, 6, '...') }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-info btn_test_drive">Add</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -257,8 +399,13 @@
 @push('add-js')
     <script src="https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js"></script>
     <script src="{{ asset('admin/assets/plugins/flatpickr/flatpickr.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
+        const qnaOptions = @json($qnas);
+        // console.log(qnaOptions);
+
+        $(document).ready(function(){
             $("#basicInput").flatpickr({
                 enableTime: true,
                 noCalendar: true,
@@ -271,28 +418,11 @@
                 dateFormat: "h:i K",  // 'K' adds AM/PM
             });
 
-        $(document).ready(function(){
-            let jReq;
-            ClassicEditor
-                .create(document.querySelector('#customer_experience'))
-                .then(newEditor => {
-                    jReq = newEditor;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            //____ feedback_answer Select2 ____//
+            $('#feedback_answer').select2();
 
-
-            let jReqa;
-            ClassicEditor
-                .create(document.querySelector('#test_drive_experience'))
-                .then(newEditor => {
-                    jReqa = newEditor;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-
+            //____ feedback_answer2 Select2 ____//
+            $('.feedback_answer2').select2();
 
             let jReqs;
             ClassicEditor
@@ -303,6 +433,76 @@
                 .catch(error => {
                     console.error(error);
                 });
+        })
+
+
+        // add new input rows
+        $(document).on("click", ".btn_customer", function(){
+            let optionsHtmls = '<option value="" disabled selected>Select the options</option>';
+
+            qnaOptions.forEach(function(qna) {
+                let shortAnswer = qna.answer.split(" ").slice(0, 10).join(" ");
+                if (qna.answer.split(" ").length > 10) {
+                    shortAnswer += '...';
+                }
+                optionsHtmls += `<option value="${qna.id}">(${qna.id}) ${shortAnswer}</option>`;
+            });
+
+            $('.table_extend').prepend(`
+                <tr>
+                    <td>
+                        <textarea name="customer_feedback[]" class="form-control" id="" cols="20" rows="5" required></textarea>
+                    </td>
+                    <td>
+                        <select class="form-control" name="customer_answer[]" id="feedback_answer" required>
+                            ${optionsHtmls}
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger">Remove</button>
+                    </td>
+                </tr>
+            `);
+        });
+
+        // delete all single input rows
+        $(document).on("click", ".btn-danger", function(){
+            $(this).closest("tr").remove();
+        })
+
+
+        // add new input rows
+        $(document).on("click", ".btn_test_drive", function(){
+            let optionsHtml = '<option value="" disabled selected>Select the options</option>';
+
+            qnaOptions.forEach(function(qna) {
+                let shortAnswer = qna.answer.split(" ").slice(0, 10).join(" ");
+                if (qna.answer.split(" ").length > 10) {
+                    shortAnswer += '...';
+                }
+                optionsHtml += `<option value="${qna.id}">(${qna.id}) ${shortAnswer}</option>`;
+            });
+
+            $('.table_extendss').prepend(`
+                <tr>
+                    <td>
+                        <textarea name="test_drive[]" class="form-control" id="" cols="20" rows="5" required></textarea>
+                    </td>
+                    <td>
+                        <select class="form-control" name="feedback_answer[]" id="feedback_answer" required>
+                            ${optionsHtml}
+                        </select>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn_remove">Remove</button>
+                    </td>
+                </tr>
+            `);
+        });
+
+        // delete all single input rows
+        $(document).on("click", ".btn_remove", function(){
+            $(this).closest("tr").remove();
         })
     </script>
 @endpush
