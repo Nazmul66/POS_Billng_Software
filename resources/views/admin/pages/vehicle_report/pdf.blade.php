@@ -3,32 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
     <title>Job Card Invoice</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Playfair Display", serif;
             margin: 0;
             padding: 0;
         }
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #000;
-            box-sizing: border-box;
-        }
-        .header {
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .sub-header {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 0;
+            margin: 0 auto;
+            }
+
+    .header-left {
+      text-align: center;
+      padding-left: 38px;
+    }
+
+    .arabic-text {
+      color: #c00;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    .company-name {
+      font-size: 40px;
+      font-weight: bold;
+      color: #c00;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .tagline {
+      font-size: 18px;
+      color: #e68a00;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    .address {
+      font-size: 12px;
+      font-weight: 700;
+      color: #000;
+      font-family: "Inter", sans-serif;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .header-right {
+      text-align: right;
+      padding-right: 20px;
+    }
+
+    .header-right img {
+      max-width: 150px;
+      width: 120px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 800px;
+      margin: auto;
+      padding: 0px 20px 20px 20px;
+      border: 1px solid #000;
+      box-sizing: border-box;
+      border-bottom: none;
+    }
         .details-table, .description-table {
             width: 100%;
             border-collapse: collapse;
@@ -104,13 +152,80 @@
                 height: auto;
             }
         }
+        .footer {
+            position: fixed;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background-color: #0d2f4b;
+            color: white;
+            font-size: 15px;
+            padding: 10px 20px;
+        }
+
+    .footer-table {
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    .footer-left,
+    .footer-right {
+      vertical-align: top;
+      line-height: 1.8;
+    }
+
+    .footer-left p,
+    .footer-right p {
+      margin: 0;
+    }
+
+    .footer-right {
+      text-align: right;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+    .watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      height: auto;
+      opacity: 0.07;
+      transform: translate(-60%, -60%);
+      z-index: -1;
+    }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">ADNAN AUTOMOBILES</div>
-        <div class="sub-header">Job Card</div>
+
+    {{-- Watermark Image --}}
+    <img src="{{ public_path('admin/images/car_logo.jpg') }}" class="watermark" alt="Watermark">
+    
+     {{-- Header --}}
+    <div class="container" style="border: none;">
+        <table class="header-table">
+          <tr>
+            <td class="header-left">
+              <div class="company-name">ANOWARA MOTORS</div>
+              <div class="tagline">Service Without Compromise</div>
+              <div class="address">
+                Plot- 395, Block-J, Baridhara, South Point School Main Gate Road, Dhaka-1212
+              </div>
+            </td>
+            <td class="header-right">
+              <img src="{{ public_path('admin/images/car_logo.jpg') }}" alt="Anowara Motors Logo">
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    <div class="container" style="margin-top: -24px;">
+        {{-- <div class="header">ADNAN AUTOMOBILES</div>
+        <div class="sub-header">Job Card</div> --}}
         <p><strong>Invoice No:</strong> #{{ $vehicle_pdf->invoice_number }}</p>
         <p><strong>Date:</strong> {{ date('d M Y', strtotime(now())) }}, <strong>Time In:</strong> {{ $vehicle_pdf->time_in }} <strong>Time Out:</strong> {{ $vehicle_pdf->time_out }}</p>
         
@@ -178,6 +293,23 @@
                 <td><strong>Service Engineer:</strong></td>
             </tr>
         </table>
+    </div>
+
+    <div class="container" style="padding: 0;">
+        <footer class="footer">
+            <table class="footer-table">
+              <tr>
+                <td class="footer-left">
+                  <p><strong>E-mail:</strong> anowaramotors2025@gmail.com</p>
+                  <p><strong>Facebook:</strong> @anowaramotors</p>
+                </td>
+                <td class="footer-right">
+                  <p><strong>Hotline :</strong> 01337-146333</p>
+                  <p>01337-146861</p>
+                </td>
+              </tr>
+            </table>
+          </footer>
     </div>
 </body>
 </html>

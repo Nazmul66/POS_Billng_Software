@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\VehicleReportController;
 use App\Http\Controllers\Admin\BillingPosController;
 use App\Http\Controllers\Admin\QNAController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -125,4 +126,7 @@ Route::group(["as" => 'admin.',"prefix" => '/admin'], function () {
     Route::get('/billing-pos-invoice-delete/{id}', [BillingPosController::class, 'destroy'])->name('billing-pos-invoice-delete');
     Route::get('/billing-pos-invoice-pdf/{id}', [BillingPosController::class, 'pdf'])->name('billing-pos-invoice-pdf');
 
+
+    //______ Settings _____//
+    Route::resource('/settings', SettingController::class)->names('settings');
 });

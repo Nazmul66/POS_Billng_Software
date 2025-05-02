@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div class="row align-items-center mb-2">
+                    {{-- <div class="row align-items-center mb-2">
                         <div class="col-lg-4">
                             <div class="form__input-title">
                                 <label for="basicInput">Time In :</label>
@@ -84,7 +84,7 @@
                                 <input class="form-control" type="time" name="time_out" id="basicInput2" placeholder="Select Time">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 

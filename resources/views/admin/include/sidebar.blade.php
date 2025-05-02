@@ -158,6 +158,17 @@
             </a>
         </li> --}}
 
+         {{-- People --}}
+        <li class="menu-label">Settings</li>
+        <li class="@yield('product')">
+            <a href="{{ route('admin.settings.index') }}">
+                <div class="parent-icon">
+                    <i class='bx bx-cart' ></i>
+                </div>
+                <div class="menu-title">Settings</div>
+            </a>
+        </li>
+
     </ul>
     <!--end navigation-->
 </div>

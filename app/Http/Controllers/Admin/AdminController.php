@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\BillingPos;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,7 +13,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.dashboard');
+        $billing_pos = BillingPos::orderBy('id', "DESC")->get();
+        return view('admin.pages.dashboard', compact('billing_pos'));
     }
 
     /**
